@@ -1,20 +1,12 @@
 import Screen from "./modules/Screen.js";
-
-let scroll = 0;
-let totalLength = 0;
-let scrollPercent = 0;
-let $stages = document.querySelectorAll('.screen');
-let $progressStages = document.querySelectorAll('.progress--stage');
-let currentIndex = 0;
-let $currentStage = $stages[currentIndex];
-let $currentProgress = $progressStages[currentIndex];
-window.$currentProgress = $currentProgress;
+import Progress from "./modules/Progress.js";
 
 let screens = [];
-$stages.forEach(function( $s ){
-  totalLength += $s.offsetHeight;
-  screens.push( new Screen( $s ) );
-});
+document
+  .querySelectorAll('.screen')
+  .forEach(function( $s ){
+    screens.push( new Screen( $s ) );
+  });
 
 for( let i = 0; i < screens.length; i++ ){
   let before = i > 0 ? screens[i-1] : false;
@@ -22,15 +14,64 @@ for( let i = 0; i < screens.length; i++ ){
   screens[i].linkToOthers( before, after );
 }
 
-screens[0].active = true;
+window.screens = screens;
+
+let currentScreenIndex = 0;
+let pScreenIndex = 0;
+let currentStageIndex = Math.floor( currentScreenIndex / 2 );
+let currentScreen = screens[currentScreenIndex];
+
+let progress = new Progress( document.querySelector('.progress--bar'), currentScreen , currentStageIndex );
+
+let stageSelectTimeout = false;
+progress.onStageSelect = function( index, id ){
+  if( index !== currentStageIndex ){
+    currentScreen.deactivate();
+    stageSelectTimeout = setTimeout(function(){
+      currentScreenIndex = index * 2;
+      currentStageIndex = index;
+      currentScreen = screens[currentScreenIndex];
+      currentScreen.activate();
+      progress.setCurrent( currentScreen, currentStageIndex );
+    }, 300 );
+  }
+}
+
+currentScreen.activate();
+
+
 
 for( let i = 0; i < screens.length; i++ ){
   screens[i].update();
 }
 
+let isScrolling;
+let scrollBreak = false;
+
+
 document.addEventListener('wheel', function( e ){
-  for( let i = 0; i < screens.length; i++ ){
-    screens[i].scroll( e.deltaY );
-    screens[i].update();
+  window.clearTimeout( isScrolling );
+  isScrolling = setTimeout(function() {
+		scrollBreak = false;
+	}, 200 );
+
+  if( !scrollBreak ){
+    currentScreen.scroll( e.deltaY );
+    currentScreen.update();
   }
+
+  for( let i = 0; i < screens.length; i++ ){
+    if( screens[i].active ){
+      currentScreenIndex = i;
+      currentStageIndex = Math.floor( currentScreenIndex / 2 );
+      currentScreen = screens[i];
+    }
+  }
+
+  if( currentScreenIndex !== pScreenIndex ){
+    progress.setCurrent( currentScreen, currentStageIndex );
+    scrollBreak = true;
+  }
+  
+  pScreenIndex = currentScreenIndex;
 });
