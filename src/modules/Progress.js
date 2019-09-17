@@ -67,6 +67,11 @@ proto.setCurrent = function( currentScreen, stageIndex ){
     this.currentScreen.onProgress = () => {
       this.moveIndicator();
     }
+  } else if( this.currentScreen.type === 'credits' ){
+    this.show();
+    this.currentScreen.onProgress = () => {
+      this.moveIndicator();
+    }
   } else {
     this.show();
   }
@@ -97,7 +102,13 @@ proto.moveIndicator = function(){
   if( this.currentScreen.type === 'video' ){
     let progress = this.currentScreen.video.getProgress();
     let x = this.$currentStage.offsetLeft;
-    let max = this.$currentStage.offsetWidth;
+    let max = this.$currentStage.offsetWidth - this.indicatorMinWidth;
+    progressX = x + (progress * max);    
+  } else if( this.currentScreen.type === 'credits' ){
+    let progress = this.currentScreen.contentScrollProgressFrac
+    console.log(progress);
+    let x = this.$currentStage.offsetLeft;
+    let max = this.$currentStage.offsetWidth - this.indicatorMinWidth;
     progressX = x + (progress * max);    
   } else {
     progressX = this.$currentStage.offsetLeft;

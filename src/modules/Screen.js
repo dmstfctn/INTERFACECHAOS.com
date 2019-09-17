@@ -5,8 +5,13 @@ let Screen = function( $ele ){
   this.$content = $ele.querySelector('.screen--content');
   this.active = false;
   this.type = '';
+  this.contentScrollProgressFrac = 0;
   if( this.$ele.classList.contains( 'screen__text__credits' ) ){
-      this.type = 'credits';
+    this.type = 'credits';
+    this.$ele.addEventListener('scroll', ( e ) => {
+      this.contentScrollProgressFrac = this.$ele.scrollTop / (this.$ele.scrollHeight - this.$ele.offsetHeight);
+      this._onProgress();
+    });
   } else if( this.$ele.classList.contains( 'screen__video' ) ){
     this.type = 'video';    
     this.video = new Video( this.$content.dataset.vimeo_id, this.$content );
@@ -22,7 +27,7 @@ let Screen = function( $ele ){
   }
   this.scrollProgress = 0;
   this.scrollProgressFrac = 0;
-  this.scrollMax = ( this.type === 'credits' ) ? this.$ele.scrollHeight : this.$ele.offsetHeight*0.65;  
+  this.scrollMax = ( this.type === 'credits' ) ? this.$content.scrollHeight : this.$ele.offsetHeight;  
   this.scrollMin = ( this.type === 'credits' ) ? this.$ele.offsetHeight * -0.1 : 0;
 }
 
@@ -62,7 +67,7 @@ proto.activate = function( _callback ){
   this._onActivateStart();
   this.active = true;
   this.$ele.classList.add( 'active' );
-  this.scrollProgress = 0;
+  this.scrollProgress = this.scrollMax * 0.2;
   this.scrollProgressFrac = 0;  
   if( this.type === 'video' ){
     this.video.play();
@@ -134,8 +139,12 @@ proto.update = function(){
     } else {
       this.$content.style.opacity = 1;
     }
-  } else {
-    this.$content.style.opacity = (1 - this.scrollProgressFrac);
+  } else if( this.type === 'text' ) {
+    if( this.scrollProgressFrac > 0.2 ){
+      this.$content.style.opacity = (0.8 - (this.scrollProgressFrac - 0.2)) * (1/0.8);
+    } else {
+      this.$content.style.opacity = 1;
+    }
   }
 
   
