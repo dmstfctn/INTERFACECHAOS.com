@@ -2,9 +2,11 @@ let Progress = function( $ele, currentScreen, stageIndex ){
   this.$ele = $ele;
   this.$indicator = this.$ele.querySelector('.progress--indicator');
   this.$stages = this.$ele.querySelectorAll('.progress--stage');
+  this.setIndicatorTransition( false );
   this.setCurrent( currentScreen, stageIndex );
   this.initInteraction();
   this.hideTimeout = false;
+  this.hideDelay = 3000;
 }
 
 let proto = Progress.prototype;
@@ -25,7 +27,6 @@ proto.show = function(){
 }
 
 proto._onStageSelect = function( index, id ){
-  console.log( index, id );
   if( typeof this.onStageSelect === 'function' ){
     this.onStageSelect( index, id );
   }
@@ -43,9 +44,17 @@ proto.initInteraction = function(){
     clearTimeout( this.hideTimeout );
     this.show();
     if( this.currentScreen.type === 'video' ){
-      this.hide( 1500 );
+      this.hide( this.hideDelay );
     }
-  })
+  });
+  document.addEventListener('wheel', ( e ) => {
+    console.log('wheeeeel');
+    clearTimeout( this.hideTimeout );
+    this.show();
+    if( this.currentScreen.type === 'video' ){
+      this.hide( this.hideDelay );
+    }
+  });
 };
 
 proto.setCurrent = function( currentScreen, stageIndex ){
@@ -53,13 +62,33 @@ proto.setCurrent = function( currentScreen, stageIndex ){
   this.$currentStage = this.$stages[ stageIndex ];
   this.moveIndicator();
   if( this.currentScreen.type === 'video' ){
-    this.hide( 600 );
+    this.hide( this.hideDelay );
     this.currentScreen.onProgress = () => {
       this.moveIndicator();
     }
   } else {
     this.show();
   }
+}
+
+proto.setIndicatorTransition = function( to, delay ){
+  clearTimeout( this.indicatorTransitionToggleTimeout );
+  if( !!delay && delay > 0 ){
+    this.indicatorTransitionToggleTimeout = setTimeout(() => {
+      if( to ){
+        this.$indicator.classList.add('transition-active');
+      } else {
+        this.$indicator.classList.remove('transition-active');
+      }
+    }, delay )
+  } else {
+    if( to ){
+      this.$indicator.classList.add('transition-active');
+    } else {
+      this.$indicator.classList.remove('transition-active');
+    }
+  }
+  this.indicatorTransition = to;
 }
 
 proto.moveIndicator = function(){

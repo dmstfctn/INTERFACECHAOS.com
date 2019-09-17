@@ -22,7 +22,7 @@ let Screen = function( $ele ){
   }
   this.scrollProgress = 0;
   this.scrollProgressFrac = 0;
-  this.scrollMax = ( this.type === 'credits' ) ? this.$ele.scrollHeight : this.$ele.offsetHeight/2;  
+  this.scrollMax = ( this.type === 'credits' ) ? this.$ele.scrollHeight : this.$ele.offsetHeight*0.65;  
   this.scrollMin = ( this.type === 'credits' ) ? this.$ele.offsetHeight * -0.1 : 0;
 }
 
@@ -39,34 +39,59 @@ proto._onProgress = function(){
   }
 }
 
+proto._onActivated = function(){
+  if( typeof this.onActivated === 'function' ){
+    this.onActivated( this );
+  }
+}
+
+proto._onActivateStart = function(){
+  if( typeof this.onActivateStart === 'function' ){
+    this.onActivateStart( this );
+  }
+}
+
 proto.preload = function(){
   if( this.type === 'video' ){
     this.video.play();    
   }
 }
 
-proto.activate = function(){
+proto.activate = function( _callback ){
+  let callback = _callback || function(){};
+  this._onActivateStart();
   this.active = true;
   this.$ele.classList.add( 'active' );
   this.scrollProgress = 0;
-  this.scrollProgressFrac = 0;
+  this.scrollProgressFrac = 0;  
   if( this.type === 'video' ){
     this.video.play();
-    this.video.fadeIn(1500);
-  }
-  if( this.type === 'credits' ){
+    this.video.fadeIn(1500, () => {
+      this._onActivated();
+      callback();
+    });    
+  } else if( this.type === 'credits' ){
     this.$content.scrollTop = 0;
+    this._onActivated();
+    callback();
+  } else {
+    this._onActivated();
+    callback();
   }
   this.update();
 }
 
-proto.deactivate = function(){
+proto.deactivate = function( _callback ){
+  let callback = _callback || function(){};
   this.active = false;
   this.$ele.classList.remove('active');
   if( this.type === 'video' ){
-    this.video.fadeOut(1500, () => {
+    this.video.fadeOut( 1500, () => {
       this.video.pause();
+      callback();
     });
+  } else{
+    callback();
   }
 }
 
@@ -80,12 +105,14 @@ proto.scroll = function( delta ){
       this.scrollProgress = this.scrollMax + 10;
     }
     this.scrollProgressFrac = this.scrollProgress/this.scrollMax;
-    if( this.scrollProgressFrac > 1 && this.screenAfter ){
-      this.deactivate()
-      this.screenAfter.activate();
+    if( this.scrollProgressFrac > 0.75 && this.screenAfter ){
+      this.deactivate( () => {
+        this.screenAfter.activate();
+      });      
     } else if( this.scrollProgressFrac < this.scrollMin / this.scrollMax && this.screenBefore ){
-      this.deactivate();
-      this.screenBefore.activate();
+      this.deactivate( () => {
+        this.screenBefore.activate();
+      });      
     }
     if( this.scrollProgressFrac > 0.25 && this.screenAfter.type === 'video' ){
       this.screenAfter.preload();
@@ -102,9 +129,16 @@ proto.resize = function(){
 proto.update = function(){
   if( this.type === 'video' ){
     this.video.update( this.scrollProgressFrac );
-  }  
+    if( this.scrollProgressFrac > 0.75 ){
+      this.$content.style.opacity = (0.25 - (this.scrollProgressFrac - 0.75)) * (1/0.25);
+    } else {
+      this.$content.style.opacity = 1;
+    }
+  } else {
+    this.$content.style.opacity = (1 - this.scrollProgressFrac);
+  }
 
-  this.$content.style.opacity = (1 - this.scrollProgressFrac);
+  
 }
 
 export default Screen;

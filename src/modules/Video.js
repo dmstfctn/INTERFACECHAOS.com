@@ -5,7 +5,8 @@ let Video = function( id, $ele ){
     id: id,
     width: window.innerWidth,
     autoplay: false,
-    controls: false
+    controls: false,
+    muted: true
   };
   this.vimeo = new Vimeo.Player( $ele, opts );
   this.volume = 0;
