@@ -7,6 +7,8 @@ let Progress = function( $ele, currentScreen, stageIndex ){
   this.initInteraction();
   this.hideTimeout = false;
   this.hideDelay = 3000;
+  this.indicatorMinWidth = this.$indicator.offsetWidth;
+
 }
 
 let proto = Progress.prototype;
@@ -91,16 +93,16 @@ proto.setIndicatorTransition = function( to, delay ){
 }
 
 proto.moveIndicator = function(){
-  let translateX = 0;
+  let progressX = 0;
   if( this.currentScreen.type === 'video' ){
     let progress = this.currentScreen.video.getProgress();
     let x = this.$currentStage.offsetLeft;
     let max = this.$currentStage.offsetWidth;
-    translateX = x + (progress * max);    
+    progressX = x + (progress * max);    
   } else {
-    translateX = this.$currentStage.offsetLeft;
+    progressX = this.$currentStage.offsetLeft;
   }
-  this.$indicator.style.transform = 'translateX(' + translateX + 'px)';
+  this.$indicator.style.width = progressX + this.indicatorMinWidth;
 }
 
 export default Progress;

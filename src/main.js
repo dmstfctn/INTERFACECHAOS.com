@@ -23,8 +23,21 @@ let currentStageIndex = Math.floor( currentScreenIndex / 2 );
 let currentScreen = screens[currentScreenIndex];
 
 let progress = new Progress( document.querySelector('.progress--bar'), currentScreen , currentStageIndex );
-let controls = new Controls( document.querySelector('.controls') );
+let controls = new Controls( currentScreen );
 
+controls.onMute = function(){
+  if( currentScreen.video ){
+    currentScreen.video.mute();
+  }
+}
+controls.onUnMute = function(){
+  if( currentScreen.video ){
+    currentScreen.video.unmute();
+  }
+}
+
+controls.setMuteState( true );
+controls.hideMute();
 
 let stageSelectTimeout = false;
 progress.onStageSelect = function( index, id ){
@@ -40,6 +53,8 @@ progress.onStageSelect = function( index, id ){
       progress.setIndicatorTransition( true );
       progress.setCurrent( currentScreen, currentStageIndex );
       progress.setIndicatorTransition( false, 1500 );
+
+      controls.setCurrent( currentScreen );
     }, 300 );
   }
 }
@@ -59,13 +74,16 @@ for( let i = 0; i < screens.length; i++ ){
         progress.setIndicatorTransition( false, 1500 );
       }
       progress.setCurrent( currentScreen, currentStageIndex );
+      controls.setCurrent( currentScreen );
     };
     screens[index].onActivated = function( s ){
          
       if( s.type === 'video' ){
         progress.hide();
+        controls.hide();
       } else {
-        progress.show();      
+        progress.show(); 
+        controls.show();
       }
     }
   })(i);
@@ -95,6 +113,7 @@ document.addEventListener('wheel', function( e ){
 
   if( currentScreenIndex !== pScreenIndex ){
     progress.setCurrent( currentScreen, currentStageIndex );
+    controls.setCurrent( currentScreen );
     scrollBreak = true;
   }
   

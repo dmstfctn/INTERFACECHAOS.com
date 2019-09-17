@@ -5,10 +5,10 @@ let Video = function( id, $ele ){
     id: id,
     width: window.innerWidth,
     autoplay: false,
-    controls: false,
-    muted: true
+    controls: false
   };
   this.vimeo = new VimeoPlayer( $ele, opts );
+  this.muted = true;
   this.volume = 0;
   this.vimeo.setVolume( this.volume );
   this.progress = 0;
@@ -45,6 +45,16 @@ proto.pause = function(){
   this.vimeo.pause();
 }
 
+proto.mute = function(){
+  this.muted = true;
+  this.vimeo.setVolume( 0 );
+}
+
+proto.unmute = function(){
+  this.muted = false;
+  this.vimeo.setVolume( this.volume );
+}
+
 proto.getProgress = function(){
   return this.progress;
 }
@@ -69,7 +79,9 @@ proto.fadeIn = function( _time, _callback ){
       callback();
       clearInterval( this.fadeLoop );
     }    
-    this.vimeo.setVolume( this.volume );
+    if( !this.muted ){
+      this.vimeo.setVolume( this.volume );
+    }
   }, 10 );
 };
 
@@ -93,7 +105,9 @@ proto.fadeOut = function( _time, _callback ){
       callback();
       clearInterval( this.fadeLoop );
     }
-    this.vimeo.setVolume( this.volume );
+    if( !this.muted ){
+      this.vimeo.setVolume( this.volume );
+    }
   }, 10 );
 };
 

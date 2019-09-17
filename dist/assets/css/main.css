@@ -46,32 +46,22 @@ html, body{
     line-height: 2.5rem;   
   }
     .progress--bar{
-      background: #000000;
       width: 200%;
       display: flex;
       justify-content: space-between;  
     }
-    @keyframes hidethenshow{
-      0%{ opacity: 1;}
-      20%{opacity: 0;}
-      80%{opacity: 0;}
-      100%{opacity: 1;}
-    }
     .progress--indicator{
       width: 2.5rem;
-      height: 2.5rem;
+      height: 5px;
       background: #666666;
       position: absolute;
       left: 0;
       top: 0;
       z-index: 1;
       opacity: 1;
-    }
-      
+    } 
       .progress--indicator.transition-active{
         transition: transform .75s steps( 2 );
-        animation: hidethenshow 1s;
-        animation-fill-mode: forwards;
       }
     .progress--stage{
       padding-left: 2.5rem;
@@ -107,10 +97,34 @@ html, body{
         font-style: italic;
         white-space: nowrap;        
       }
-  
-  .controls{
+  .control{
+    font-family: inherit;
+    font-size: 1rem;
+    text-transform: none;
     display: none;
+    position: fixed;
+    bottom: 0.5rem;
+    height: 2.5rem;
+    padding: 0;
+    z-index: 10;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    color: #666666;
+    line-height: 2.45rem;
+    padding: 0;
+    margin: 0;
+    font-style: italic;
+    white-space: nowrap;  
+    cursor: pointer;  
   }
+
+    .control__fullscreen{
+      right: 2.5rem;
+    }
+    .control__mute{
+      left: 2.5rem;
+    }
 
   .screen{
     width: 100%;    
@@ -147,16 +161,12 @@ html, body{
         height: 0;
         overflow: hidden;
       }
-    .controls{
-      display: block;
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 10;
-    }
-      .controls--button{
-        height: 1rem;
-        border: 1px solid white;
+      .control{
+        display: block;
+      }
+      .control.state__hidden{
+        opacity: 0;
+        pointer-events: none;
       }
     .screen{
       height: 100%;
