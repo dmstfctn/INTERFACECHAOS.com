@@ -69,7 +69,8 @@ html, body{
     }
       
       .progress--indicator.transition-active{
-        animation: hidethenshow 1.5s;
+        transition: transform .75s steps( 2 );
+        animation: hidethenshow 1s;
         animation-fill-mode: forwards;
       }
     .progress--stage{

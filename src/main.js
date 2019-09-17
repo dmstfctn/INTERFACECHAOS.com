@@ -31,12 +31,13 @@ progress.onStageSelect = function( index, id ){
   if( index !== currentStageIndex ){
     clearTimeout(stageSelectTimeout);
     currentScreen.deactivate();
-    progress.setIndicatorTransition( true );
+   
     stageSelectTimeout = setTimeout(function(){
       currentScreenIndex = index * 2;
       currentStageIndex = index;
       currentScreen = screens[currentScreenIndex];
       currentScreen.activate();
+      progress.setIndicatorTransition( true );
       progress.setCurrent( currentScreen, currentStageIndex );
       progress.setIndicatorTransition( false, 1500 );
     }, 300 );
@@ -49,11 +50,14 @@ for( let i = 0; i < screens.length; i++ ){
   screens[i].update();
   (function( index ){
     screens[index].onActivateStart = function( s ){
+      let previousScreen = currentScreen;
       currentScreenIndex = index;
       currentStageIndex = Math.floor( currentScreenIndex / 2 );
-      currentScreen = screens[index];        
-      progress.setIndicatorTransition( true );
-      progress.setIndicatorTransition( false, 1500 );
+      currentScreen = screens[index];
+      if( previousScreen && previousScreen.type === 'video' && currentScreen.type !== 'video'){
+        progress.setIndicatorTransition( true );
+        progress.setIndicatorTransition( false, 1500 );
+      }
       progress.setCurrent( currentScreen, currentStageIndex );
     };
     screens[index].onActivated = function( s ){

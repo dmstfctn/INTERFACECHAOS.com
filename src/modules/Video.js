@@ -16,7 +16,6 @@ let Video = function( id, $ele ){
   this.vimeo.getDuration().then(duration => this.length = duration);  
   this.fadeLoop = false;
   this.vimeo.on('ended', ( ) => {
-    console.log('vimeo says ended')
     this._onEnded();
   });
   this.vimeo.on('timeupdate', ( t ) => {
@@ -25,7 +24,6 @@ let Video = function( id, $ele ){
       this.onProgress();
     }
     if( t.seconds >= t.duration - 2 ){
-      console.log( 'less than 2 seconds to end' );
       this._onEnded();
     }
   });
@@ -34,7 +32,6 @@ let Video = function( id, $ele ){
 let proto = Video.prototype;
 
 proto._onEnded = function(){
-  console.log('Video() - _onEnded()');
   if( typeof this.onEnded === 'function' ){
     this.onEnded();
   }
@@ -88,7 +85,6 @@ proto.fadeOut = function( _time, _callback ){
   clearInterval( this.fadeLoop );
   let change = -this.volume;
   let step = change / (time / 10);  
-  console.log( 'from', this.volume, ' fadeout: ', change, step );
   this.fadeLoop = setInterval(() => {
     this.volume += step;
     if( this.volume <= 0 ){

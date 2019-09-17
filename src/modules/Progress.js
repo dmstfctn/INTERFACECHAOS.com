@@ -48,7 +48,6 @@ proto.initInteraction = function(){
     }
   });
   document.addEventListener('wheel', ( e ) => {
-    console.log('wheeeeel');
     clearTimeout( this.hideTimeout );
     this.show();
     if( this.currentScreen.type === 'video' ){
