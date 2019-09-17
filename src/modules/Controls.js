@@ -14,26 +14,25 @@ let Controls = function( currentScreen ){
 
 let proto = Controls.prototype;
 
-
-
 proto.hide = function( delay ){
-  console.log('controls hide()')
   clearTimeout( this.hideTimeout );
   if( delay ){
     this.hideTimeout = setTimeout(() => {
       this.$fullscreen.classList.add('state__hidden');
       this.$mute.classList.add('state__hidden');
+      document.body.style.cursor = 'none';
     }, delay );
   } else {
     this.$fullscreen.classList.add('state__hidden');
     this.$mute.classList.add('state__hidden');
+    document.body.style.cursor = 'none';
   }
 }
 proto.show = function(){
-  console.log('controls show()')
   clearTimeout( this.hideTimeout );
   this.$fullscreen.classList.remove('state__hidden');
   this.$mute.classList.remove('state__hidden');
+  document.body.style.cursor = 'auto';
 }
 
 proto.initHideShow = function(){
