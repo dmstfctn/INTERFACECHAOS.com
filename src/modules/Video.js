@@ -1,4 +1,4 @@
-//ensure <script src="https://player.vimeo.com/api/player.js"></script> is included on page
+import * as VimeoPlayer from "@vimeo/player/dist/player.min.js" ;
 
 let Video = function( id, $ele ){
   let opts = {
@@ -8,7 +8,7 @@ let Video = function( id, $ele ){
     controls: false,
     muted: true
   };
-  this.vimeo = new Vimeo.Player( $ele, opts );
+  this.vimeo = new VimeoPlayer( $ele, opts );
   this.volume = 0;
   this.vimeo.setVolume( this.volume );
   this.progress = 0;
