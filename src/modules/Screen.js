@@ -152,8 +152,6 @@ proto.update = function(){
       this.$content.style.opacity = 1;
     }
   }
-
-  
 }
 
 export default Screen;
