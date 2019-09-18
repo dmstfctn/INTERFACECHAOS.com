@@ -78,6 +78,7 @@ proto.setCurrent = function( currentScreen ){
 
 
 proto._onMute = function(){
+  this.isMuted = true;
   this.$mute_label.innerText = 'unmute';
   this.$mute.classList.add('state--muted');
   if( typeof this.onMute === 'function'){
@@ -86,6 +87,7 @@ proto._onMute = function(){
 }
 
 proto._onUnMute = function(){
+  this.isMuted = false;
   this.$mute_label.innerText = 'mute';
   this.$mute.classList.remove('state--muted');
   if( typeof this.onUnMute === 'function'){

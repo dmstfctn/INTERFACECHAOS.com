@@ -62,6 +62,12 @@ proto.preload = function(){
   }
 }
 
+proto.setMuteState = function( state ){
+  if( this.type === 'video' ){
+    this.video.muted = state;
+  }
+}
+
 proto.activate = function( _callback ){
   let callback = _callback || function(){};
   this._onActivateStart();

@@ -48,7 +48,7 @@ progress.onStageSelect = function( index, id ){
     stageSelectTimeout = setTimeout(function(){
       currentScreenIndex = index * 2;
       currentStageIndex = index;
-      currentScreen = screens[currentScreenIndex];
+      currentScreen = screens[currentScreenIndex];     
       currentScreen.activate();
       progress.setIndicatorTransition( true );
       progress.setCurrent( currentScreen, currentStageIndex );
@@ -69,6 +69,8 @@ for( let i = 0; i < screens.length; i++ ){
       currentScreenIndex = index;
       currentStageIndex = Math.floor( currentScreenIndex / 2 );
       currentScreen = screens[index];
+      console.log('set mute state to: ', controls.isMuted )
+      currentScreen.setMuteState( controls.isMuted );
       if( previousScreen && previousScreen.type === 'video' && currentScreen.type !== 'video'){
         progress.setIndicatorTransition( true );
         progress.setIndicatorTransition( false, 1500 );
