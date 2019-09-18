@@ -183,6 +183,24 @@ html, body{
     height: 100%;
     border: 0;
   }
+
+  .credits{
+    display: table;
+    margin: 0 auto;
+    border-spacing: 1rem;
+  }
+    .credits--section{
+      display: table-row;
+    }
+    .credits--title{ 
+      display: table-cell;
+      font-weight: normal;
+      font-size: 1.4rem;
+    }
+    .credits--content{
+      display: table-cell;
+    }
+
   @media ( min-width: 1024px ){
     .progress{
       overflow: hidden;
