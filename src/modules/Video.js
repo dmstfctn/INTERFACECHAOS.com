@@ -1,6 +1,8 @@
 import * as VimeoPlayer from "@vimeo/player/dist/player.min.js" ;
 
 let Video = function( id, $ele ){
+  this.$ele = $ele;
+  this.$overlay = this.$ele.parentElement.querySelector('.video-overlay');
   let opts = {
     id: id,
     width: window.innerWidth,
@@ -15,6 +17,7 @@ let Video = function( id, $ele ){
   this.length = 0;
   this.vimeo.getDuration().then(duration => this.length = duration);  
   this.fadeLoop = false;
+  this.isPlaying = false;
   this.vimeo.on('ended', ( ) => {
     this._onEnded();
   });
@@ -27,6 +30,11 @@ let Video = function( id, $ele ){
       this._onEnded();
     }
   });
+
+  this.$overlay.addEventListener('click', () => {
+    console.log( 'click' );
+    this.togglePlay();
+  });
 }
 
 let proto = Video.prototype;
@@ -37,11 +45,21 @@ proto._onEnded = function(){
   }
 }
 
+proto.togglePlay = function(){
+  if( this.isPlaying ){
+    this.pause();
+  } else {
+    this.play();
+  }
+}
+
 proto.play = function(){
+  this.isPlaying = true;
   this.vimeo.play();
 }
 
 proto.pause = function(){
+  this.isPlaying = false;
   this.vimeo.pause();
 }
 

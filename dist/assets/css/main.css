@@ -1,6 +1,6 @@
 html{
-  font-family: scarla;
-  font-size: 18px;
+  font-family: scarla, sans-serif;
+  font-size: 14px;
 }
 
 html, body{
@@ -27,9 +27,6 @@ html, body{
     p:last-child{
       margin-bottom: 0;
     }
-  .br{
-    display: block;
-  }
 
   .progress{
     position: fixed;
@@ -42,7 +39,7 @@ html, body{
     line-height: 2.5rem;   
   }
     .progress--bar{
-      width: 200%;
+      width: 100%;
       display: flex;
       justify-content: space-between;  
     }
@@ -66,23 +63,9 @@ html, body{
       padding-right: 1rem;
       box-sizing: border-box;
       position: relative;
+      width: auto;
     }
-      .progress--stage__excerpt{
-        width: 30%;
-      }
-      .progress--stage__excerpt:nth-child(0){
-        width: 34.46092619%;
-      }
-      .progress--stage__excerpt:nth-child(1){
-        width: 22.20513748%;
-      }
-      .progress--stage__excerpt:nth-child(2){
-        width: 43.33393632%;
-      }
-      .progress--stage__credits{
-         width: 10%;
-         text-align: right;
-      }
+      
 
       .progress--stage a{
         text-decoration: none;
@@ -117,7 +100,7 @@ html, body{
     color: #666666;
     line-height: 2.45rem;
     padding: 0;
-    margin-left: .6rem;
+    margin-left: .9rem;
     font-style: italic;
     white-space: nowrap;  
     cursor: pointer;  
@@ -177,6 +160,15 @@ html, body{
     position: relative;
     padding-top: 56.25%;
   }
+  .screen__video .video-overlay{
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: transparent;
+  }
   .screen__video iframe{
     position: absolute;
     top: 0;
@@ -184,6 +176,7 @@ html, body{
     width: 100%;
     height: 100%;
     border: 0;
+    z-index: 0;
   }
 
   .screen__text__credits .screen--content{
@@ -221,9 +214,37 @@ html, body{
       display: table-cell;
     }
 
-  @media ( min-width: 1024px ){
+  @media ( max-width: 641px ){
+    .screen--content{
+      opacity: 1 !important;
+    }
+  }
+
+  @media ( min-width: 640px ){
+    html{
+      font-size: 18px;
+    }
+    .br{
+      display: block;
+    }
     .progress{
       overflow: hidden;
+    }
+    .progress--stage__excerpt{
+      width: 30%;
+    }
+    .progress--stage__excerpt:nth-child(0){
+      width: 34.46092619%;
+    }
+    .progress--stage__excerpt:nth-child(1){
+      width: 22.20513748%;
+    }
+    .progress--stage__excerpt:nth-child(2){
+      width: 43.33393632%;
+    }
+    .progress--stage__credits{
+       width: 10%;
+       text-align: right;
     }
     .progress--bar{
       width: 100%;
@@ -247,8 +268,8 @@ html, body{
       background: #000000;
       opacity: 0;
       transition: opacity 1.25s ease-in;
-
     }
+   
       .screen.active{
         opacity: 1;
       }

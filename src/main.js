@@ -2,6 +2,8 @@ import Screen from "./modules/Screen.js";
 import Progress from "./modules/Progress.js";
 import Controls from "./modules/Controls.js";
 
+let BREAKPOINT = 640;
+
 let screens = [];
 document
   .querySelectorAll('.screen')
@@ -14,8 +16,6 @@ for( let i = 0; i < screens.length; i++ ){
   let after = i < screens.length - 1 ? screens[i+1] : false;  
   screens[i].linkToOthers( before, after ); 
 }
-
-window.screens = screens;
 
 let currentScreenIndex = 0;
 let pScreenIndex = 0;
@@ -44,7 +44,7 @@ progress.onStageSelect = function( index, id ){
   if( index !== currentStageIndex ){
     clearTimeout(stageSelectTimeout);
     currentScreen.deactivate();
-   
+  
     stageSelectTimeout = setTimeout(function(){
       currentScreenIndex = index * 2;
       currentStageIndex = index;
@@ -87,14 +87,13 @@ for( let i = 0; i < screens.length; i++ ){
 let isScrolling;
 let scrollBreak = false;
 
-
 document.addEventListener('wheel', function( e ){
   window.clearTimeout( isScrolling );
   isScrolling = setTimeout(function() {
-		scrollBreak = false;
-	}, 200 );
+    scrollBreak = false;
+  }, 200 );
 
-  if( !scrollBreak ){
+  if( !scrollBreak && window.innerWidth > BREAKPOINT ){
     currentScreen.scroll( e.deltaY );
     currentScreen.update();
   }
