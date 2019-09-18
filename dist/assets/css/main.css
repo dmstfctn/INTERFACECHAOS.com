@@ -169,6 +169,24 @@ html, body{
     left: 0;
     background: transparent;
   }
+    .video-overlay svg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX( -50% ) translateY( -50% );
+      width:2rem;
+      height: 2rem;
+    }
+    .video-overlay svg path,
+    .video-overlay svg rect,
+    .video-overlay svg polygon{
+      fill: #666666;
+      stroke: #1a1a1a;
+      stroke-width: 20px;
+    }
+    .screen__video .screen--content.playing + .video-overlay svg{
+      display: none;
+    }
   .screen__video iframe{
     position: absolute;
     top: 0;
@@ -269,7 +287,6 @@ html, body{
       opacity: 0;
       transition: opacity 1.25s ease-in;
     }
-   
       .screen.active{
         opacity: 1;
       }
@@ -288,6 +305,9 @@ html, body{
           position: absolute;
           top: 50%;
           width: 177.77777778vh;
+        }
+        .video-overlay svg{
+          display: none;
         }
         .screen__text__credits{
           padding-bottom: 0;

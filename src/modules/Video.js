@@ -7,7 +7,8 @@ let Video = function( id, $ele ){
     id: id,
     width: window.innerWidth,
     autoplay: false,
-    controls: false
+    controls: false,
+    autopause: true
   };
   this.vimeo = new VimeoPlayer( $ele, opts );
   this.muted = true;
@@ -55,11 +56,13 @@ proto.togglePlay = function(){
 
 proto.play = function(){
   this.isPlaying = true;
+  this.$ele.classList.add('playing');
   this.vimeo.play();
 }
 
 proto.pause = function(){
   this.isPlaying = false;
+  this.$ele.classList.remove('playing');
   this.vimeo.pause();
 }
 
