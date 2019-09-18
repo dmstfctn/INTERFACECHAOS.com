@@ -117,6 +117,7 @@ html, body{
     font-style: italic;
     white-space: nowrap;  
     cursor: pointer;  
+    outline: none;
   }
 
     .control__fullscreen{
