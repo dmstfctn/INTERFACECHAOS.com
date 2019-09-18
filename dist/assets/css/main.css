@@ -186,18 +186,36 @@ html, body{
     border: 0;
   }
 
+  .screen__text__credits .screen--content{
+    padding-bottom: 10rem;
+  }
+
+  .credits--top{      
+    width: 100%;
+    text-align: center;
+    line-height: 1.1;
+    margin-top: 4.8rem;
+  }
   .credits{
     display: table;
     margin: 0 auto;
-    border-spacing: 1rem;
-  }
+    border-spacing: 1rem 0;   
+    line-height: 1.1; 
+    margin-bottom: 3.6rem;
+  }        
     .credits--section{
       display: table-row;
+      text-align: left;
     }
+    .credits--section__spacer{
+      height: 1.4rem;;
+    }
+
     .credits--title{ 
       display: table-cell;
       font-weight: normal;
       font-size: 1.4rem;
+      margin-bottom: 0;
     }
     .credits--content{
       display: table-cell;
