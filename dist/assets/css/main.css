@@ -154,6 +154,10 @@ html, body{
       text-align: center;
       font-size: 1.4rem;
     }
+    .screen--content{
+      /* optim */
+      transform: translateZ(0);
+    }
 
   .screen__video{
     overflow: hidden;
@@ -172,7 +176,7 @@ html, body{
     .video-overlay svg{
       position: absolute;
       top: 50%;
-      left: 50%;
+      left: 50%;      
       transform: translateX( -50% ) translateY( -50% );
       width:2rem;
       height: 2rem;
@@ -301,7 +305,9 @@ html, body{
           left: 50%;
           min-height: 100%;
           min-width: 100%;
-          transform: translate(-50%, -50%);
+          /* optim */
+          /*transform: translateX( -50% ) translateY( -50% );*/
+          transform: translateX( -50% ) translateY( 0 ) translateZ(0);
           position: absolute;
           top: 50%;
           width: 177.77777778vh;
