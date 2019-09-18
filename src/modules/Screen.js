@@ -24,11 +24,11 @@ let Screen = function( $ele ){
     }
   } else {
     this.type = 'text';
-  }
-  this.scrollProgress = 0;
-  this.scrollProgressFrac = 0;
+  }  
   this.scrollMax = ( this.type === 'credits' ) ? this.$content.scrollHeight : this.$ele.offsetHeight;  
   this.scrollMin = ( this.type === 'credits' ) ? this.$ele.offsetHeight * -0.1 : 0;
+  this.scrollProgress = this.scrollMax * 0.2;  
+  this.scrollProgressFrac = 0;
 }
 
 let proto = Screen.prototype;
@@ -82,7 +82,7 @@ proto.activate = function( _callback ){
       callback();
     });    
   } else if( this.type === 'credits' ){
-    this.$content.scrollTop = 0;
+    this.$ele.scrollTop = 0;
     this._onActivated();
     callback();
   } else {

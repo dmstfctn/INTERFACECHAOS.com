@@ -2,13 +2,11 @@ let Progress = function( $ele, currentScreen, stageIndex ){
   this.$ele = $ele;
   this.$indicator = this.$ele.querySelector('.progress--indicator');
   this.$stages = this.$ele.querySelectorAll('.progress--stage');
-  this.setIndicatorTransition( false );
   this.setCurrent( currentScreen, stageIndex );
   this.initInteraction();
   this.hideTimeout = false;
   this.hideDelay = 3000;
   this.indicatorMinWidth = this.$indicator.offsetWidth;
-
 }
 
 let proto = Progress.prototype;
@@ -77,26 +75,6 @@ proto.setCurrent = function( currentScreen, stageIndex ){
   }
 }
 
-proto.setIndicatorTransition = function( to, delay ){
-  clearTimeout( this.indicatorTransitionToggleTimeout );
-  if( !!delay && delay > 0 ){
-    this.indicatorTransitionToggleTimeout = setTimeout(() => {
-      if( to ){
-        this.$indicator.classList.add('transition-active');
-      } else {
-        this.$indicator.classList.remove('transition-active');
-      }
-    }, delay )
-  } else {
-    if( to ){
-      this.$indicator.classList.add('transition-active');
-    } else {
-      this.$indicator.classList.remove('transition-active');
-    }
-  }
-  this.indicatorTransition = to;
-}
-
 proto.moveIndicator = function(){
   let progressX = 0;
   if( this.currentScreen.type === 'video' ){
@@ -104,14 +82,17 @@ proto.moveIndicator = function(){
     let x = this.$currentStage.offsetLeft;
     let max = this.$currentStage.offsetWidth - this.indicatorMinWidth;
     progressX = x + (progress * max);    
+    this.$indicator.classList.add('indicator-active');
   } else if( this.currentScreen.type === 'credits' ){
     let progress = this.currentScreen.contentScrollProgressFrac
     console.log(progress);
     let x = this.$currentStage.offsetLeft;
     let max = this.$currentStage.offsetWidth - this.indicatorMinWidth;
     progressX = x + (progress * max);    
+    this.$indicator.classList.add('indicator-active');
   } else {
     progressX = this.$currentStage.offsetLeft;
+    this.$indicator.classList.remove('indicator-active');
   }
   this.$indicator.style.width = progressX + this.indicatorMinWidth;
 }
