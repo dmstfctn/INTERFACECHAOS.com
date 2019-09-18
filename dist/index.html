@@ -25,12 +25,32 @@
           </div>
         </div>
       </nav>
-      <button class="control control__fullscreen">
-        fullscreen
-      </button>
-      <button class="control control__mute">
-        mute
-      </button>
+      <nav class="controls">
+        <button class="control control__fullscreen">
+          <span class="control--label">fullscreen</span>
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 640 640" style="enable-background:new 0 0 640 640;" xml:space="preserve">
+            <g class="activate">
+              <path d="M380,80v60h120v120h60V80H380L380,80z"/>
+              <path d="M80,260h60V140h120V80H80V260L80,260z"/>
+              <path d="M500,500H380v60h180V380h-60V500L500,500z"/>
+              <path d="M140,380H80v180h180v-60H140V380L140,380z"/>
+            </g>
+            <g class="deactivate">
+              <path d="M260,80h-60v120H80v60h180V80L260,80z"/>
+              <path d="M560,260v-60H440V80h-60v180H560L560,260z"/>
+              <path d="M440,440h120v-60H380v180h60V440L440,440z"/>
+              <path d="M200,560h60V380H80v60h120V560L200,560z"/>
+            </g>
+          </svg>
+        </button>
+        <button class="control control__mute">
+          <span class="control--label">mute</span>
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 640 640" style="enable-background:new 0 0 640 640;" xml:space="preserve">
+            <path class="icon" d="M53,400h120l150,150V70L173,220H53V400z M383,190v240c44.4-20.4,75-66.9,75-120C458,257.8,427.4,212.2,383,190z M383,108.7c86.7,25.8,150,106.2,150,201.3s-63.3,175.5-150,201.3v61.8C503.3,545.8,593,438.4,593,310S503.3,74.2,383,46.9V108.7z"/>
+            <rect class="cross-out" x="289" y="-45.2" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -132.5484 320.0009)" width="62" height="730.3"/>
+          </svg>
+        </button>
+      </nav>
       <div class="ic">
         <article class="stage stage__excerpt" id="a-magic-fruit">
           <h2>a magic fruit</h2>

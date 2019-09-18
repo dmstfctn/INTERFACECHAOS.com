@@ -1,6 +1,8 @@
 let Controls = function( currentScreen ){
   this.$fullscreen = document.querySelector('.control__fullscreen');
-  this.$mute = document.querySelector('.control__mute')
+  this.$mute = document.querySelector('.control__mute');
+  this.$fullscreen_label = this.$fullscreen.querySelector('.control--label');
+  this.$mute_label = this.$mute.querySelector('.control--label');
 
   this.setCurrent( currentScreen );
 
@@ -76,14 +78,16 @@ proto.setCurrent = function( currentScreen ){
 
 
 proto._onMute = function(){
-  this.$mute.innerText = 'unmute';
+  this.$mute_label.innerText = 'unmute';
+  this.$mute.classList.add('state--muted');
   if( typeof this.onMute === 'function'){
     this.onMute();
   }
 }
 
 proto._onUnMute = function(){
-  this.$mute.innerText = 'mute';
+  this.$mute_label.innerText = 'mute';
+  this.$mute.classList.remove('state--muted');
   if( typeof this.onUnMute === 'function'){
     this.onUnMute();
   }
@@ -134,9 +138,11 @@ proto.hideMute = function(){
 proto.initFullscreen = function(){
   document.addEventListener('fullscreenchange', (event) => {
     if (document.fullscreenElement) {
-      this.$fullscreen.innerText = 'exit fullscreen';
+      this.$fullscreen.classList.add('state__fullscreen-active');
+      this.$fullscreen_label.innerText = 'exit fullscreen';
     } else {
-      this.$fullscreen.innerText = 'fullscreen';
+      this.$fullscreen.classList.remove('state__fullscreen-active');
+      this.$fullscreen_label.innerText = 'fullscreen';
     }
   });
   this.$fullscreen.addEventListener( 'click', () => {
@@ -145,10 +151,7 @@ proto.initFullscreen = function(){
         .requestFullscreen({ navigationUI: "hide" })        
         .catch( ( err ) => {
           console.log('Could not enter fullscreen');
-        })
-        .then( () => {
-          this.$fullscreen.innerText = 'exit fullscreen';
-        })
+        });       
     } else {
       document.exitFullscreen();
     }
