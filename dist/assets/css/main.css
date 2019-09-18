@@ -158,7 +158,7 @@ html, body{
     box-sizing: border-box
   }
     .screen__text{
-      padding: 5.5rem;
+      padding: 5.5rem 1.5rem;
       text-align: center;
       font-size: 1.4rem;
     }
@@ -301,6 +301,9 @@ html, body{
     }
       .screen.active{
         opacity: 1;
+      }
+      .screen__text{
+        padding: 5.5rem;
       }
       .screen__video{
         height: 100%;
