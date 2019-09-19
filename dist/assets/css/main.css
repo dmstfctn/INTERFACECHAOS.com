@@ -241,6 +241,10 @@ html, body{
     padding-bottom: 10rem;
   }
 
+  #a-survival-dance .br{
+    display: block;
+  }
+
   .credits--top{      
     width: 100%;
     text-align: center;
