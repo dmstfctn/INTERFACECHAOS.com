@@ -19,11 +19,19 @@ html, body{
   height: 100%;
   color: #666666;
   text-shadow:
-   -1px -1px 0 #1a1a1a,  
-    1px -1px 0 #1a1a1a,
-    -1px 1px 0 #1a1a1a,
-     1px 1px 0 #1a1a1a;
+   -1px -1px 0 #1f1f1f,  
+    1px -1px 0 #1f1f1f,
+    -1px 1px 0 #1f1f1f,
+     1px 1px 0 #1f1f1f;
 }
+  a{
+    color: #666666;
+    text-shadow:
+    -1px -1px 0 #1f1f1f,  
+      1px -1px 0 #1f1f1f,
+      -1px 1px 0 #1f1f1f,
+      1px 1px 0 #1f1f1f;
+  }
   h1, h2{
     display: none;
   }
@@ -52,7 +60,7 @@ html, body{
       justify-content: space-between;  
     }
     .progress--indicator{
-      width: .5rem;
+      width: 0;
       height: 3px;
       background: #666666;
       position: absolute;
@@ -84,7 +92,9 @@ html, body{
         padding: 0;
         margin: 0;
         font-style: italic;
-        white-space: nowrap;        
+        white-space: nowrap;   
+        font-size: 0.8rem;
+        text-transform: uppercase;     
       }
 
   .controls{
@@ -124,7 +134,7 @@ html, body{
     .control path,
     .control rect{
       fill: #666666;
-      stroke: #1a1a1a;
+      stroke: #1f1f1f;
       stroke-width: 20px;
     }
     .control__fullscreen{
@@ -193,7 +203,7 @@ html, body{
     .video-overlay svg rect,
     .video-overlay svg polygon{
       fill: #666666;
-      stroke: #1a1a1a;
+      stroke: #1f1f1f;
       stroke-width: 20px;
     }
     .screen__video .screen--content.playing + .video-overlay svg{
@@ -218,30 +228,35 @@ html, body{
     text-align: center;
     line-height: 1.1;
     margin-top: 4.8rem;
+    margin-bottom: 1rem;
   }
   .credits{
-    display: table;
+    display: block;
     margin: 0 auto;
     border-spacing: 1rem 0;   
     line-height: 1.1; 
     margin-bottom: 3.6rem;
+    width: 100%;
   }        
     .credits--section{
-      display: table-row;
-      text-align: left;
+      text-align: center;
     }
     .credits--section__spacer{
       height: 1.4rem;;
     }
 
     .credits--title{ 
-      display: table-cell;
+      vertical-align: top;
       font-weight: normal;
       font-size: 1.4rem;
       margin-bottom: 0;
+      margin-top: 0;
+      text-align: center; 
     }
     .credits--content{
-      display: table-cell;
+      vertical-align: top; 
+      text-align: center;
+      margin-bottom: 1rem;
     }
 
   @media ( max-width: 641px ){
@@ -281,7 +296,7 @@ html, body{
       position: relative;
     }
       .progress--bar.state__hidden{
-        height: 0;
+        height: 3px;
         overflow: hidden;
       }
       .control{
@@ -298,8 +313,10 @@ html, body{
       background: #000000;
       opacity: 0;
       transition: opacity 1.25s ease-in;
+      pointer-events: none;
     }
       .screen.active{
+        pointer-events: all;
         opacity: 1;
       }
       .screen__text{
@@ -327,6 +344,27 @@ html, body{
         .screen__text__credits{
           padding-bottom: 0;
           overflow-y: auto;
-        }
-          
+        }       
+  }
+
+  @media ( min-width: 1024px ){
+    .credits--top{      
+      margin-bottom: 0;
+    }
+  .credits--title{
+    display: inline-block;
+    max-width: 15rem;
+    padding-left: 8rem;
+    text-align: left;
+    width: 50%;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .credits--content{
+    text-align: left;
+    display: inline-block;
+    max-width: 22.9rem;
+    width: 50%;
+    margin-bottom: 0;
+  }      
   }

@@ -41,10 +41,10 @@ controls.hideMute();
 
 let stageSelectTimeout = false;
 progress.onStageSelect = function( index, id ){
-  if( index !== currentStageIndex ){
+  if( index * 2 !== currentScreenIndex ){
     clearTimeout(stageSelectTimeout);
     currentScreen.deactivate();
-  
+    console.log( 'selected, ', index, id );
     stageSelectTimeout = setTimeout(function(){
       currentScreenIndex = index * 2;
       currentStageIndex = index;

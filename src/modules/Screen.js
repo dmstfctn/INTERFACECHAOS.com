@@ -25,7 +25,7 @@ let Screen = function( $ele ){
   } else {
     this.type = 'text';
   }  
-  this.scrollMax = ( this.type === 'credits' ) ? this.$content.scrollHeight : this.$ele.offsetHeight;  
+  this.scrollMax = ( this.type === 'credits' ) ? this.$content.scrollHeight : this.$ele.offsetHeight * 0.75;  
   this.scrollMin = ( this.type === 'credits' ) ? this.$ele.offsetHeight * -0.1 : 0;
   this.scrollProgress = this.scrollMax * 0.2;  
   this.scrollProgressFrac = 0;
@@ -76,6 +76,7 @@ proto.activate = function( _callback ){
   this.scrollProgress = this.scrollMax * 0.2;
   this.scrollProgressFrac = 0;  
   if( this.type === 'video' ){
+    this.video.vimeo.setCurrentTime(0);
     this.video.play();
     this.video.fadeIn(1500, () => {
       this._onActivated();
@@ -146,8 +147,8 @@ proto.update = function(){
       this.$content.style.opacity = 1;
     }
   } else if( this.type === 'text' ) {
-    if( this.scrollProgressFrac > 0.2 ){
-      this.$content.style.opacity = (0.8 - (this.scrollProgressFrac - 0.2)) * (1/0.8);
+    if( this.scrollProgressFrac > 0.1 ){
+      this.$content.style.opacity = ((1-0.1) - (this.scrollProgressFrac - 0.1)) * (1/(1-0.1));
     } else {
       this.$content.style.opacity = 1;
     }

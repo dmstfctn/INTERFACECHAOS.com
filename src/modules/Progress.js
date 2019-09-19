@@ -92,7 +92,8 @@ proto.moveIndicator = function(){
     this.$indicator.classList.add('indicator-active');
   } else {
     progressX = this.$currentStage.offsetLeft;
-    this.$indicator.classList.remove('indicator-active');
+    this.$indicator.classList.add('indicator-active');
+    //this.$indicator.classList.remove('indicator-active');
   }
   this.$indicator.style.width = progressX + this.indicatorMinWidth;
 }
