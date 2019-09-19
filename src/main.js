@@ -87,7 +87,7 @@ for( let i = 0; i < screens.length; i++ ){
 let isScrolling;
 let scrollBreak = false;
 
-document.addEventListener('wheel', function( e ){
+let mouseWheelResponse = function( e ){
   window.clearTimeout( isScrolling );
   isScrolling = setTimeout(function() {
     scrollBreak = false;
@@ -112,4 +112,58 @@ document.addEventListener('wheel', function( e ){
   }
   
   pScreenIndex = currentScreenIndex;
+}
+
+document.addEventListener('wheel', function( e ){
+  if( window.innerWidth > BREAKPOINT ){
+    mouseWheelResponse( e );
+  }
 });
+
+let $miniprogress = document.querySelector('.mini-progress');
+let $miniprogress_inner = $miniprogress.querySelector('.progress--bar');
+
+
+let smallScreenScroll = function( e ){
+  // move the bar
+  let barW = $miniprogress_inner.offsetWidth;
+  let scrollFrac = document.body.scrollTop / (document.body.scrollHeight - document.body.offsetHeight);
+  let x = scrollFrac * (barW - window.innerWidth) * -1;
+  $miniprogress_inner.style.transform = 'translateX(' + x + 'px)';
+}
+
+let smallScreenLayoutBar = function(){
+  let barW = $miniprogress_inner.offsetWidth;
+  let pageH = document.body.scrollHeight - document.body.offsetHeight;
+  let section1H = screens[0].$ele.offsetHeight + screens[1].$ele.offsetHeight;
+  let section2H = screens[2].$ele.offsetHeight + screens[3].$ele.offsetHeight;
+  let section3H = screens[4].$ele.offsetHeight + screens[5].$ele.offsetHeight;
+  let section4H = screens[6].$ele.offsetHeight;
+  let section1Frac = section1H / pageH;
+  let section2Frac = section2H / pageH;
+  let section3Frac = section3H / pageH;
+  let section4Frac = section4H / pageH;
+  let $stageTitles = document.querySelectorAll('.mini-progress .progress--stage')
+
+  $stageTitles[0].style.left = 0;
+  $stageTitles[1].style.left = 0 + (section1Frac * barW);
+  $stageTitles[2].style.left = 0 + ((section1Frac + section2Frac) * barW);
+  $stageTitles[3].style.left = 0 + ((section1Frac + section2Frac + section3Frac) * barW);
+
+}
+
+window.addEventListener('resize', function(){
+  if( window.innerWidth <= BREAKPOINT ){
+    smallScreenLayoutBar();
+  }
+})
+
+document.addEventListener('scroll', function( e ){
+  if( window.innerWidth <= BREAKPOINT ){
+    smallScreenScroll( e );
+  }
+})
+
+if( window.innerWidth <= BREAKPOINT ){
+  smallScreenLayoutBar();
+}
