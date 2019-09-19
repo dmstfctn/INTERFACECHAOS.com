@@ -25,7 +25,7 @@ let Screen = function( $ele ){
   } else {
     this.type = 'text';
   }  
-  this.scrollMax = ( this.type === 'credits' ) ? this.$content.scrollHeight : this.$ele.offsetHeight * 0.75;  
+  this.scrollMax = ( this.type === 'credits' ) ? this.$content.scrollHeight : this.$ele.offsetHeight * 0.6;  
   this.scrollMin = ( this.type === 'credits' ) ? this.$ele.offsetHeight * -0.1 : 0;
   this.scrollProgress = this.scrollMax * 0.2;  
   this.scrollProgressFrac = 0;
