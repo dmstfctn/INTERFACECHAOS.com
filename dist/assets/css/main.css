@@ -254,7 +254,7 @@ html, body{
 
   .screen__text__credits .screen--content{
     padding-top: 10rem;
-    padding-top: 30vh;
+    padding-top: 100vh;
     padding-bottom: 10rem;
   }
 
@@ -397,6 +397,8 @@ html, body{
         .screen__text__credits{
           padding-bottom: 0;
           overflow-y: auto;
+          width: 110vw;
+          left: -5vw;
         }       
   }
 

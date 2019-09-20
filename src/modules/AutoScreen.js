@@ -1,9 +1,10 @@
-let AutoScreen = function( _duration ){
+let AutoScreen = function( _duration, _initProgress ){
   this.duration = _duration;
   this.timer = false;
   this.restartTimer = false;
   this.time = 0;
-  this.progress = 0;
+  this.initProgress = _initProgress || 0;
+  this.progress = this.initProgress || 0;
   this.timeStep = 50;
   this.progressStep = 1 / (this.duration / this.timeStep);
   this.isPaused = false;
@@ -34,7 +35,7 @@ proto.pause = function(){
 }
 
 proto.reset = function(){
-  this.progress = 0;
+  this.progress = this.initProgress;
 }
 
 proto.start = function(){  
@@ -63,7 +64,7 @@ proto.play = function(){
 }
 
 proto._onEnded = function(){
-  this.progress = 0;
+  this.reset();
   if( typeof this.onEnded === 'function' ){
     this.onEnded();
   }

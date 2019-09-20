@@ -14,11 +14,16 @@ let Screen = function( $ele ){
 
   if( this.$ele.classList.contains( 'screen__text__credits' ) ){
     this.type = 'credits';
-    this.autoScreen = new AutoScreen( 90000 );
+    this.autoScreen = new AutoScreen( 90000, 0.2 );
     this.$ele.addEventListener('scroll', ( e ) => {
       this.contentScrollProgressFrac = this.$ele.scrollTop / (this.$ele.scrollHeight - this.$ele.offsetHeight);
       this._onProgress();
       this.autoScreen.updateProgress(this.contentScrollProgressFrac);
+      console.log(this.autoScreen.progress);
+      if( this.autoScreen.progress < 0.1 ){
+        this.deactivate();
+        this.screenBefore.activate();
+      }
     });
     this.autoScreen.onProgress = () => {
       this.contentScrollProgressFrac = this.autoScreen.progress;
@@ -101,7 +106,7 @@ proto.activate = function( _callback ){
       callback();
     });    
   } else if( this.type === 'credits' ){
-    this.$ele.scrollTop = 0;
+    this.$ele.scrollTop = this.autoScreen.initProgress * (this.$ele.scrollHeight - this.$ele.offsetHeight) + 10;
     this.autoScreen.start();
     this._onActivated();
     callback();
@@ -133,10 +138,10 @@ proto.deactivate = function( _callback ){
 
 
 proto.scroll = function( delta ){
-  if( this.type === 'text' ){
+  if( this.type === 'text' || this.type === 'credits'){
     this.autoScreen.pauseAndAutoResume();
   }
-  if( this.active ){
+  if( this.active && this.type !== 'credits' ){
     this.scrollProgress += delta;
     if( this.scrollProgress < this.scrollMin -10 ){
       this.scrollProgress = this.scrollMin -10;
