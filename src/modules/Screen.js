@@ -14,7 +14,7 @@ let Screen = function( $ele ){
 
   if( this.$ele.classList.contains( 'screen__text__credits' ) ){
     this.type = 'credits';
-    this.autoScreen = new AutoScreen( 90000, 0.2 );
+    this.autoScreen = new AutoScreen( 180000, 0.2 );
     this.$ele.addEventListener('scroll', ( e ) => {
       this.contentScrollProgressFrac = this.$ele.scrollTop / (this.$ele.scrollHeight - this.$ele.offsetHeight);
       this._onProgress();
