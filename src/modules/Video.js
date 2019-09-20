@@ -35,10 +35,12 @@ let Video = function( id, $ele ){
   });
 
   this.$overlay.addEventListener('click', () => {
-    this.togglePlay();
-    if( window <= BREAKPOINT ){
+    if( window.innerWidth <= BREAKPOINT ){
+      console.log( 'smallscreen unmute' );
+      this.volume = 1;
       this.unmute();
     }
+    this.togglePlay();
   });
 }
 
