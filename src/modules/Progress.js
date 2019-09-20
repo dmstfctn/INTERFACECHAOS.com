@@ -88,7 +88,7 @@ proto.moveIndicator = function(){
     progressX = x + (progress * max);    
     this.$indicator.classList.add('indicator-active');
   } else if( this.currentScreen.type === 'credits' ){
-    let progress = this.currentScreen.contentScrollProgressFrac;
+    let progress = (this.currentScreen.contentScrollProgressFrac - this.currentScreen.autoScreen.initProgress) / (1-this.currentScreen.autoScreen.initProgress);
     let x = this.$currentStage.offsetLeft;
     let max = this.$currentStage.offsetWidth - this.indicatorMinWidth;
     progressX = x + (progress * max);    
