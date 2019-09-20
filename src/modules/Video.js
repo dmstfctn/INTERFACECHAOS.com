@@ -1,5 +1,7 @@
 import * as VimeoPlayer from "@vimeo/player/dist/player.min.js" ;
 
+let BREAKPOINT = 640;
+
 let Video = function( id, $ele ){
   this.$ele = $ele;
   this.$overlay = this.$ele.parentElement.querySelector('.video-overlay');
@@ -33,8 +35,10 @@ let Video = function( id, $ele ){
   });
 
   this.$overlay.addEventListener('click', () => {
-    console.log( 'click' );
     this.togglePlay();
+    if( window <= BREAKPOINT ){
+      this.unmute();
+    }
   });
 }
 
