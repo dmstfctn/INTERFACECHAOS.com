@@ -130,14 +130,20 @@ let $miniprogress_inner = $miniprogress.querySelector('.progress--bar');
 let smallScreenScroll = function( e ){
   // move the bar
   let barW = $miniprogress_inner.offsetWidth;
-  let scrollFrac = document.body.scrollTop / (document.body.scrollHeight - document.body.offsetHeight);
+  let scrollFrac = document.body.scrollTop / document.body.scrollHeight;
   let x = scrollFrac * (barW - window.innerWidth) * -1;
+  let $progressStages = document.querySelectorAll('.mini-progress .progress--stage');
+  let maxScroll = (-1 * ($progressStages[0].offsetWidth + $progressStages[1].offsetWidth + $progressStages[2].offsetWidth));
+  console.log( maxScroll, x );
+  if( x < maxScroll ){
+    x = maxScroll;  
+  }
   $miniprogress_inner.style.transform = 'translateX(' + x + 'px)';
 }
 
 let smallScreenLayoutBar = function(){
   let barW = $miniprogress_inner.offsetWidth;
-  let pageH = document.body.scrollHeight - document.body.offsetHeight;
+  let pageH = document.body.scrollHeight;
   let section1H = screens[0].$ele.offsetHeight + screens[1].$ele.offsetHeight;
   let section2H = screens[2].$ele.offsetHeight + screens[3].$ele.offsetHeight;
   let section3H = screens[4].$ele.offsetHeight + screens[5].$ele.offsetHeight;
@@ -148,16 +154,26 @@ let smallScreenLayoutBar = function(){
   let section4Frac = section4H / pageH;
   let $stageTitles = document.querySelectorAll('.mini-progress .progress--stage')
 
-  $stageTitles[0].style.left = 0;
-  $stageTitles[1].style.left = 0 + (section1Frac * barW);
-  $stageTitles[2].style.left = 0 + ((section1Frac + section2Frac) * barW);
-  $stageTitles[3].style.left = 0 + ((section1Frac + section2Frac + section3Frac) * barW);
+  $stageTitles[0].style.width = section1Frac * barW;
+  $stageTitles[1].style.width = section2Frac * barW;
+  $stageTitles[2].style.width = section3Frac * barW;
+  $stageTitles[3].style.width = section4Frac * barW;
+}
 
+let smallScreenPauseAuto = function(){
+  for( let i = 0; i < screens.length; i++ ){
+    if( screens[i].type === 'text' || screens[i].type === 'credits' ){
+      screens[i].autoScreen.pause();
+    }
+  }
 }
 
 window.addEventListener('resize', function(){
   if( window.innerWidth <= BREAKPOINT ){
     smallScreenLayoutBar();
+    smallScreenPauseAuto();
+  } else {
+    
   }
 })
 
@@ -169,4 +185,5 @@ document.addEventListener('scroll', function( e ){
 
 if( window.innerWidth <= BREAKPOINT ){
   smallScreenLayoutBar();
+  smallScreenPauseAuto();  
 }
