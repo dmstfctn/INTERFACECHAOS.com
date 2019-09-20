@@ -18,11 +18,9 @@ let Screen = function( $ele ){
     this.$ele.addEventListener('scroll', ( e ) => {
       this.contentScrollProgressFrac = this.$ele.scrollTop / (this.$ele.scrollHeight - this.$ele.offsetHeight);
       this._onProgress();
-      console.log( 'update autoscreen progress 1' )
       this.autoScreen.updateProgress(this.contentScrollProgressFrac);
     });
     this.autoScreen.onProgress = () => {
-      console.log('AUTOSCREEN PROGRESS:', this.$ele.parentElement.id );
       this.contentScrollProgressFrac = this.autoScreen.progress;
       this.$ele.scrollTop = this.contentScrollProgressFrac * (this.$ele.scrollHeight - this.$ele.offsetHeight);
     };
@@ -40,7 +38,6 @@ let Screen = function( $ele ){
     this.type = 'text';
     this.autoScreen = new AutoScreen( 15000 );
     this.autoScreen.onProgress = () => {
-      console.log('AUTOSCREEN PROGRESS:', this.$ele.parentElement.id );
       this.scrollProgressFrac = this.autoScreen.progress;
       this.update();
       this._onProgress();
@@ -105,12 +102,10 @@ proto.activate = function( _callback ){
     });    
   } else if( this.type === 'credits' ){
     this.$ele.scrollTop = 0;
-    console.log('ACTIVATE AUTOSCREEN')
     this.autoScreen.start();
     this._onActivated();
     callback();
   } else {
-    console.log('ACTIVATE AUTOSCREEN')
     this.autoScreen.start();
     this._onActivated();
     callback();
@@ -128,11 +123,9 @@ proto.deactivate = function( _callback ){
       callback();
     });
   } else if( this.type === 'credits' ){
-    console.log('DEACTIVATE AUTOSCREEN')
     this.autoScreen.stop();
     callback();
   } else{
-    console.log('DEACTIVATE AUTOSCREEN')
     this.autoScreen.stop();
     callback();
   }
@@ -164,7 +157,6 @@ proto.scroll = function( delta ){
       this.screenAfter.preload();
     }     
     if( this.type === 'text' || this.type === 'credits' ){
-      console.log( 'update autoscreen progress 2' );
       this.autoScreen.updateProgress( this.scrollProgressFrac );
     }
   }
