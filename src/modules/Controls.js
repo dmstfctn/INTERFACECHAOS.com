@@ -43,7 +43,9 @@ proto.initHideShow = function(){
     this.show();
     if( this.currentScreen.type === 'video' ){
       this.showMute();
-      this.hide( this.hideDelay );
+      if( this.currentScreen.video.muted === false ){
+        this.hide( this.hideDelay );
+      }
     } else {
       this.hideMute();
     }
@@ -53,7 +55,9 @@ proto.initHideShow = function(){
     this.show();
     if( this.currentScreen.type === 'video' ){
       this.showMute();
-      this.hide( this.hideDelay );
+      if( this.currentScreen.video.muted === false ){
+        this.hide( this.hideDelay );
+      }
     } else {
       this.hideMute();
     }
@@ -64,11 +68,11 @@ proto.setCurrent = function( currentScreen ){
   this.currentScreen = currentScreen;
   if( this.currentScreen.type === 'video' ){
     this.showMute();
-    this.hide( this.hideDelay );
     if( this.currentScreen.video.muted ){
       this.mute()
     } else {
       this.unmute();
+      this.hide( this.hideDelay );
     }
   } else {
     this.show();

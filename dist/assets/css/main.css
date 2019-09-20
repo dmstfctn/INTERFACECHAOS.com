@@ -106,7 +106,7 @@ html, body{
       .progress--stage .progress--stage--title{
         text-decoration: none;
         color: #666666;
-        display: block;
+        display: inline-block;
         height: 2.5rem;
         line-height: 2.45rem;
         padding: 0;
@@ -240,6 +240,8 @@ html, body{
   }
 
   .screen__text__credits .screen--content{
+    padding-top: 10rem;
+    padding-top: 30vh;
     padding-bottom: 10rem;
   }
 

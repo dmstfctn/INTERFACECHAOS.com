@@ -75,7 +75,9 @@ for( let i = 0; i < screens.length; i++ ){
     screens[index].onActivated = function( s ){
       if( s.type === 'video' ){
         progress.hide( 3000 );
-        controls.hide( 3000 );
+        if( !s.video.muted ){
+          controls.hide( 3000 );
+        }
       } else {
         progress.show(); 
         controls.show();
@@ -110,6 +112,7 @@ let mouseWheelResponse = function( e ){
     controls.setCurrent( currentScreen );
     scrollBreak = true;
   }
+  progress.moveIndicator();
   
   pScreenIndex = currentScreenIndex;
 }
