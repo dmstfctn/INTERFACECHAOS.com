@@ -43,8 +43,7 @@ let stageSelectTimeout = false;
 progress.onStageSelect = function( index, id ){
   if( index * 2 !== currentScreenIndex ){
     clearTimeout(stageSelectTimeout);
-    currentScreen.deactivate();
-    console.log( 'selected, ', index, id );
+    currentScreen.deactivate();    
     stageSelectTimeout = setTimeout(function(){
       currentScreenIndex = index * 2;
       currentStageIndex = index;
@@ -67,7 +66,6 @@ for( let i = 0; i < screens.length; i++ ){
       currentScreenIndex = index;
       currentStageIndex = Math.floor( currentScreenIndex / 2 );
       currentScreen = screens[index];
-      //console.log('set mute state to: ', controls.isMuted )
       currentScreen.setMuteState( controls.isMuted );      
       progress.setCurrent( currentScreen, currentStageIndex );
       controls.setCurrent( currentScreen );
@@ -134,7 +132,6 @@ let smallScreenScroll = function( e ){
   let x = scrollFrac * (barW - window.innerWidth) * -1;
   let $progressStages = document.querySelectorAll('.mini-progress .progress--stage');
   let maxScroll = (-1 * ($progressStages[0].offsetWidth + $progressStages[1].offsetWidth + $progressStages[2].offsetWidth));
-  console.log( maxScroll, x );
   if( x < maxScroll ){
     x = maxScroll;  
   }
@@ -163,7 +160,7 @@ let smallScreenLayoutBar = function(){
 let smallScreenPauseAuto = function(){
   for( let i = 0; i < screens.length; i++ ){
     if( screens[i].type === 'text' || screens[i].type === 'credits' ){
-      screens[i].autoScreen.pause();
+      screens[i].autoScreen.stop();
     }
   }
 }
@@ -172,9 +169,7 @@ window.addEventListener('resize', function(){
   if( window.innerWidth <= BREAKPOINT ){
     smallScreenLayoutBar();
     smallScreenPauseAuto();
-  } else {
-    
-  }
+  } 
 })
 
 document.addEventListener('scroll', function( e ){

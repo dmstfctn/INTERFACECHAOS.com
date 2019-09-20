@@ -95,10 +95,8 @@ proto.moveIndicator = function(){
     this.$indicator.classList.add('indicator-active');
   } else {
     let progress = this.currentScreen.autoScreen.progress;
-    console.log('paused?', this.currentScreen.autoScreen.isPaused);
     if( this.currentScreen.autoScreen.isPaused ){      
       progress = this.currentScreen.scrollProgressFrac;
-      console.log('auto paused,', progress)
     }
     let x = this.$currentStage.offsetLeft;
     let max = titleW + this.indicatorMinWidth;

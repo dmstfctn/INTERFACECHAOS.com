@@ -18,11 +18,12 @@ let Screen = function( $ele ){
     this.$ele.addEventListener('scroll', ( e ) => {
       this.contentScrollProgressFrac = this.$ele.scrollTop / (this.$ele.scrollHeight - this.$ele.offsetHeight);
       this._onProgress();
+      console.log( 'update autoscreen progress 1' )
       this.autoScreen.updateProgress(this.contentScrollProgressFrac);
     });
     this.autoScreen.onProgress = () => {
+      console.log('AUTOSCREEN PROGRESS:', this.$ele.parentElement.id );
       this.contentScrollProgressFrac = this.autoScreen.progress;
-      console.log('scrollto:', this.contentScrollProgressFrac * (this.$ele.scrollHeight - this.$ele.offsetHeight))
       this.$ele.scrollTop = this.contentScrollProgressFrac * (this.$ele.scrollHeight - this.$ele.offsetHeight);
     };
   } else if( this.$ele.classList.contains( 'screen__video' ) ){
@@ -39,6 +40,7 @@ let Screen = function( $ele ){
     this.type = 'text';
     this.autoScreen = new AutoScreen( 15000 );
     this.autoScreen.onProgress = () => {
+      console.log('AUTOSCREEN PROGRESS:', this.$ele.parentElement.id );
       this.scrollProgressFrac = this.autoScreen.progress;
       this.update();
       this._onProgress();
@@ -103,11 +105,13 @@ proto.activate = function( _callback ){
     });    
   } else if( this.type === 'credits' ){
     this.$ele.scrollTop = 0;
-    this.autoScreen.play();
+    console.log('ACTIVATE AUTOSCREEN')
+    this.autoScreen.start();
     this._onActivated();
     callback();
   } else {
-    this.autoScreen.play();
+    console.log('ACTIVATE AUTOSCREEN')
+    this.autoScreen.start();
     this._onActivated();
     callback();
   }
@@ -124,10 +128,12 @@ proto.deactivate = function( _callback ){
       callback();
     });
   } else if( this.type === 'credits' ){
-    this.autoScreen.pause();
+    console.log('DEACTIVATE AUTOSCREEN')
+    this.autoScreen.stop();
     callback();
   } else{
-    this.autoScreen.pause();
+    console.log('DEACTIVATE AUTOSCREEN')
+    this.autoScreen.stop();
     callback();
   }
 }
@@ -156,8 +162,11 @@ proto.scroll = function( delta ){
     }
     if( this.scrollProgressFrac > 0.25 && this.screenAfter.type === 'video' ){
       this.screenAfter.preload();
-    } 
-    this.autoScreen.updateProgress(this.scrollProgressFrac);
+    }     
+    if( this.type === 'text' || this.type === 'credits' ){
+      console.log( 'update autoscreen progress 2' );
+      this.autoScreen.updateProgress( this.scrollProgressFrac );
+    }
   }
 }
 

@@ -19,11 +19,13 @@ proto.updateProgress = function( p ){
 
 proto.pauseAndAutoResume = function( _delay ){
   let delay = _delay || 500;
-  this.pause();
-  clearInterval(this.restartTimer);
-  this.restartTimer = setInterval( () => {
-    this.play();
-  }, delay );
+  if( this.isActive ){
+    this.pause();
+    clearInterval(this.restartTimer);
+    this.restartTimer = setInterval( () => {
+      this.play();
+    }, delay );
+  }
 }
 
 proto.pause = function(){
@@ -33,6 +35,18 @@ proto.pause = function(){
 
 proto.reset = function(){
   this.progress = 0;
+}
+
+proto.start = function(){  
+  this.isActive = true;
+  this.reset();
+  this.play();
+}
+
+proto.stop = function(){
+  this.isActive = false;
+  clearInterval(this.restartTimer);
+  this.pause();
 }
 
 proto.play = function(){
