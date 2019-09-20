@@ -23,8 +23,6 @@ html, body{
     1px -1px 0 #1f1f1f,
     -1px 1px 0 #1f1f1f,
      1px 1px 0 #1f1f1f;
-  overflow: hidden;
-  position: fixed;
 }
   a{
     color: #666666;
@@ -294,6 +292,10 @@ html, body{
   @media ( min-width: 640px ){
     html{
       font-size: 18px;
+    }
+    html, body{
+      overflow: hidden;
+      position: fixed;
     }
     .br{
       display: block;
