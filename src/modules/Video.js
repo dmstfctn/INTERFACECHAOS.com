@@ -41,6 +41,17 @@ let Video = function( _$ele ){
     }
   });
 
+  this.preactivate = ( _callback ) => {
+    console.log('preactivate')
+    this.vimeo.play().then( () => {
+      console.log( 'preactivated' );
+      this.vimeo.pause();
+      if( typeof _callback === 'function' ){
+        _callback();
+      };
+    });
+  }
+
   this.activate = () => {
     this.volume = 1;
     this.isActive = true;
@@ -52,7 +63,7 @@ let Video = function( _$ele ){
     this.pause();
     this.progress = 0;
     this.time = 0;
-    this.vimeo.setCurrentTime(0);
+    this.vimeo.setCurrentTime(1);
     this.$ele.classList.remove('active');
   }
 
@@ -74,6 +85,7 @@ let Video = function( _$ele ){
   }
   
   this.play = () => {
+    console.log('video play')
     this.isPlaying = true;
     this.$content.classList.add('playing');
     this.vimeo.play();
@@ -81,6 +93,7 @@ let Video = function( _$ele ){
   }
   
   this.pause = () => {
+    console.log('video pause')
     this.isPlaying = false;
     this.$content.classList.remove('playing');
     this.vimeo.pause();

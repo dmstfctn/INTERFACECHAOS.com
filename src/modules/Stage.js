@@ -53,7 +53,9 @@ let Stage = function( _$ele, _opts ){
     this.current = this.text;
     this.$ele.classList.add('active');
     this.text.activate();
-    this.video.deactivate();
+    this.video.preactivate( () => {
+      this.video.deactivate();
+    });
   }
   this.deactivate = () => {
     this.$ele.classList.remove('active');

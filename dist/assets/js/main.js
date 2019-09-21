@@ -768,6 +768,22 @@ var Video_Video = function Video(_$ele) {
     }
   });
 
+  this.preactivate = function (_callback) {
+    console.log('preactivate');
+
+    _this.vimeo.play().then(function () {
+      console.log('preactivated');
+
+      _this.vimeo.pause();
+
+      if (typeof _callback === 'function') {
+        _callback();
+      }
+
+      ;
+    });
+  };
+
   this.activate = function () {
     _this.volume = 1;
     _this.isActive = true;
@@ -785,7 +801,7 @@ var Video_Video = function Video(_$ele) {
     _this.progress = 0;
     _this.time = 0;
 
-    _this.vimeo.setCurrentTime(0);
+    _this.vimeo.setCurrentTime(1);
 
     _this.$ele.classList.remove('active');
   };
@@ -809,6 +825,7 @@ var Video_Video = function Video(_$ele) {
   };
 
   this.play = function () {
+    console.log('video play');
     _this.isPlaying = true;
 
     _this.$content.classList.add('playing');
@@ -819,6 +836,7 @@ var Video_Video = function Video(_$ele) {
   };
 
   this.pause = function () {
+    console.log('video pause');
     _this.isPlaying = false;
 
     _this.$content.classList.remove('playing');
@@ -986,7 +1004,9 @@ var Stage_Stage = function Stage(_$ele, _opts) {
 
     _this.text.activate();
 
-    _this.video.deactivate();
+    _this.video.preactivate(function () {
+      _this.video.deactivate();
+    });
   };
 
   this.deactivate = function () {
