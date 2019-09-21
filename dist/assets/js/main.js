@@ -1101,9 +1101,12 @@ var navSetActive = function navSetActive() {
 var $progress = document.querySelector('.progress');
 var $stage_titles = $progress.querySelectorAll('.progress--stage');
 var currentStageIndex = -1;
+var textDurations = [14000, 15000, 15000];
 
-var stages = _toConsumableArray(document.querySelectorAll('.stage__excerpt')).map(function (s) {
-  return new modules_Stage(s);
+var stages = _toConsumableArray(document.querySelectorAll('.stage__excerpt')).map(function (s, i) {
+  return new modules_Stage(s, {
+    textDuration: textDurations[i]
+  });
 });
 
 stages.push(new modules_CreditsStage(document.querySelector('.stage__credits')));

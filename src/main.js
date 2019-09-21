@@ -11,7 +11,16 @@ let navSetActive = function(){
 let $progress = document.querySelector('.progress');
 let $stage_titles = $progress.querySelectorAll('.progress--stage');
 let currentStageIndex = -1;
-let stages = [ ... document.querySelectorAll('.stage__excerpt') ].map( s => new Stage(s) );
+let textDurations = [14000, 15000, 15000];
+let stages = [ ... document.querySelectorAll('.stage__excerpt') ]
+              .map( (s, i) => { 
+                return new Stage(
+                  s, 
+                  { 
+                    textDuration: textDurations[i]
+                  } 
+                ) 
+              });
 stages.push( new CreditsStage( document.querySelector('.stage__credits')) );
 
 stages.forEach( ( stage, index ) => {
