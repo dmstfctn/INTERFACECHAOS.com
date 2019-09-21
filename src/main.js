@@ -1,6 +1,13 @@
 import Stage from './modules/Stage.js';
 import CreditsStage from './modules/CreditsStage.js';
 
+let navSetActive = function(){
+  $stage_titles.forEach( ( $title ) => {
+    $title.querySelector('a').classList.remove('current');
+  });
+  $stage_titles[currentStageIndex].querySelector('a').classList.add('current');
+};
+
 let $progress = document.querySelector('.progress');
 let $stage_titles = $progress.querySelectorAll('.progress--stage');
 let currentStageIndex = -1;
@@ -12,7 +19,8 @@ stages.forEach( ( stage, index ) => {
     if( typeof stages[index + 1] !== 'undefined' ){
       stages[index].deactivate();
       stages[index+1].activate();
-      currentStageIndex = index + 1;      
+      currentStageIndex = index + 1;    
+      navSetActive();  
     }
   }
   stage.onChangeCurrent = () => {
@@ -21,7 +29,8 @@ stages.forEach( ( stage, index ) => {
 })
 
 $stage_titles.forEach( ( $title, index ) => {
-  $title.querySelector('a').addEventListener( 'click', () => {
+  $title.querySelector('a').addEventListener( 'click', ( e ) => {
+    e.preventDefault();
     document.body.classList.remove('state__landing');
     stages.forEach( (stage) => {
       stage.deactivate();
@@ -29,6 +38,7 @@ $stage_titles.forEach( ( $title, index ) => {
     currentStageIndex = index;
     stages[index].activate();
     showHideControls();
+    navSetActive();
   });
 });
 
@@ -70,6 +80,7 @@ let controlsHidden = false;
 let hideControls = function(){
   clearTimeout( controlTimeout );
   controlTimeout = setTimeout( () => {
+    document.body.classList.add('state__hide-controls');
     document.querySelector('.progress--bar').classList.add('state__hidden');
     document.querySelector('.control__fullscreen').classList.add('state__hidden');
     document.querySelectorAll('.progress--indicator').forEach( indicator => indicator.classList.add('state__hidden') );
@@ -78,6 +89,7 @@ let hideControls = function(){
 
 let showControls = function(){
   clearTimeout( controlTimeout );
+  document.body.classList.remove('state__hide-controls');
   document.querySelector('.progress--bar').classList.remove('state__hidden');
   document.querySelector('.control__fullscreen').classList.remove('state__hidden');
   document.querySelectorAll('.progress--indicator').forEach( indicator => indicator.classList.remove('state__hidden') );
