@@ -431,6 +431,9 @@ html, body{
       .screen__text{
         padding: 5.5rem;
       }
+      #another-world .screen__text{
+        padding-top: 5.5rem;
+      }
       .screen__video{
         height: 100%;
         padding: 0;
