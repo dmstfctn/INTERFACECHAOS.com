@@ -3,6 +3,9 @@ module.exports = {
   output: {
     filename: "./assets/js/main.js"
   },
+  optimization: {
+		minimize: true
+	},
   module: {
     rules: [
       {
