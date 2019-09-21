@@ -174,8 +174,19 @@ html, body{
     }
 
   .landing{
-    display: none;
+    
   }
+    .landing h1{
+      display: block;
+      font-size: 1.4rem;
+      font-weight: normal;
+      text-align: center;
+      padding-top:  4rem;
+      margin-bottom: 1.5rem;
+    }
+    .landing svg{
+      display: none;
+    }
 
   .stage{
 
@@ -206,6 +217,9 @@ html, body{
     text-align: center;
     font-size: 1.4rem;
   }
+    #another-world .screen__text{
+      padding-top: 0;
+    }
   
   .screen{
     width: 100%;    
@@ -377,11 +391,15 @@ html, body{
       transition: opacity 1s ease-in-out;
       pointer-events: none;
     }
+      .landing h1{
+        display: none;
+      }
       body.state__landing .landing{      
         opacity: 1;
         pointer-events: all;
       }
       .landing svg{
+        display: block;
         transform: translateX(-50%) translateY(-50%);
         position: absolute;
         top: 50%;
