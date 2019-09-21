@@ -621,6 +621,7 @@ var Text_Text = function Text(_$ele, _duration) {
   });
 
   this.activate = function () {
+    clearTimeout(_this.deactivateTimer);
     _this.isActive = true;
 
     _this.play();
@@ -636,7 +637,7 @@ var Text_Text = function Text(_$ele, _duration) {
 
     _this.$ele.classList.remove('active');
 
-    setTimeout(function () {
+    _this.deactivateTimer = setTimeout(function () {
       _this.progress = 0;
       _this.time = 0;
     }, _this.deactivateTime);

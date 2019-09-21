@@ -29,6 +29,7 @@ let Text = function( _$ele, _duration ){
   });
 
   this.activate = () => {
+    clearTimeout( this.deactivateTimer );
     this.isActive = true;
     this.play();
     this.$ele.classList.add('active');
@@ -39,7 +40,7 @@ let Text = function( _$ele, _duration ){
     this.pause();
     this.$ele.classList.remove('active');
 
-    setTimeout( () => {
+    this.deactivateTimer = setTimeout( () => {
       this.progress = 0;
       this.time = 0;  
     }, this.deactivateTime );
