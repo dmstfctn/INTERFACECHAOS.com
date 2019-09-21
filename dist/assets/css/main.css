@@ -431,6 +431,9 @@ html, body{
       .screen__text{
         padding: 5.5rem;
       }
+      .screen__text .screen--content{
+        transform: translateZ(0);
+      }
       #another-world .screen__text{
         padding-top: 5.5rem;
       }

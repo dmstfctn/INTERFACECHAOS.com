@@ -28,8 +28,8 @@ let Stage = function( _$ele, _opts ){
   }
 
   this.video.onScrollUp = () => {
+    this.video.deactivate();
     this.video.fadeOut( 1500, () => {
-      this.video.deactivate();
       this.current = this.text;
       this.text.activate();
       this._onChangeCurrent();

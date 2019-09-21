@@ -23,6 +23,9 @@ let Text = function( _$ele, _duration ){
       this.step();
       this.time = this.progress * this.duration;    
     }
+  }, 
+  {
+    passive: true
   });
 
   this.activate = () => {

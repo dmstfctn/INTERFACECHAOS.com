@@ -616,6 +616,8 @@ var Text_Text = function Text(_$ele, _duration) {
 
       _this.time = _this.progress * _this.duration;
     }
+  }, {
+    passive: true
   });
 
   this.activate = function () {
@@ -766,25 +768,32 @@ var Video_Video = function Video(_$ele) {
         _this._onScrollUp();
       }
     }
+  }, {
+    passive: true
   });
+  this.isPreactivating = false;
 
   this.preactivate = function (_callback) {
+    _this.isPreactivating = true;
     console.log('preactivate');
 
     _this.vimeo.play().then(function () {
-      console.log('preactivated');
+      if (_this.isPreactivating) {
+        console.log('preactivated');
 
-      _this.vimeo.pause();
+        _this.vimeo.pause();
 
-      if (typeof _callback === 'function') {
-        _callback();
+        if (typeof _callback === 'function') {
+          _callback();
+        }
+
+        ;
       }
-
-      ;
     });
   };
 
   this.activate = function () {
+    _this.isPreactivating = false;
     _this.volume = 1;
     _this.isActive = true;
 
@@ -826,6 +835,7 @@ var Video_Video = function Video(_$ele) {
 
   this.play = function () {
     console.log('video play');
+    _this.isPreactivating = false;
     _this.isPlaying = true;
 
     _this.$content.classList.add('playing');
@@ -970,9 +980,9 @@ var Stage_Stage = function Stage(_$ele, _opts) {
   };
 
   this.video.onScrollUp = function () {
-    _this.video.fadeOut(1500, function () {
-      _this.video.deactivate();
+    _this.video.deactivate();
 
+    _this.video.fadeOut(1500, function () {
       _this.current = _this.text;
 
       _this.text.activate();

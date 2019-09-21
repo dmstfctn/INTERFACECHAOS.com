@@ -39,20 +39,28 @@ let Video = function( _$ele ){
         this._onScrollUp();
       }
     }
+  }, 
+  {
+    passive: true
   });
 
+  this.isPreactivating = false;
   this.preactivate = ( _callback ) => {
+    this.isPreactivating = true;
     console.log('preactivate')
-    this.vimeo.play().then( () => {
-      console.log( 'preactivated' );
-      this.vimeo.pause();
-      if( typeof _callback === 'function' ){
-        _callback();
-      };
+    this.vimeo.play().then( () => {      
+      if(this.isPreactivating){
+        console.log( 'preactivated' );
+        this.vimeo.pause();
+        if( typeof _callback === 'function' ){
+          _callback();
+        };
+      }
     });
   }
 
   this.activate = () => {
+    this.isPreactivating = false;
     this.volume = 1;
     this.isActive = true;
     this.play();
@@ -86,6 +94,7 @@ let Video = function( _$ele ){
   
   this.play = () => {
     console.log('video play')
+    this.isPreactivating = false;
     this.isPlaying = true;
     this.$content.classList.add('playing');
     this.vimeo.play();
