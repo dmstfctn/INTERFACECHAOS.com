@@ -8,7 +8,14 @@ let CreditsStage = function( _$ele ){
   this.autoScrollStep = 1;
   this.timer;
   this.current = {
-    type: 'credits'
+    type: 'credits',
+    togglePlay: () => {
+      if( this.isAuto ){
+        this.stopAuto();
+      } else {
+        this.setAuto();
+      }
+    }
   };
 
   this.$credits.scrollTop = 0;
