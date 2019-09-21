@@ -96,8 +96,6 @@ document.addEventListener( 'wheel', () => {
   showHideControls();
 });
 
-
-
 document.addEventListener( 'mousemove', () => {  
   showHideControls();
 });

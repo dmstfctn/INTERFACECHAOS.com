@@ -1,4 +1,5 @@
 import * as VimeoPlayer from "@vimeo/player/dist/player.min.js" ;
+import CONFIG from './CONFIG.js';
 
 let Video = function( _$ele ){
   this.TYPE = 'video';
@@ -28,7 +29,7 @@ let Video = function( _$ele ){
   this.$content = this.$ele.querySelector('.screen--content');
   
   this.$ele.addEventListener( 'wheel', ( e ) => {
-    if( this.isActive ){      
+    if( this.isActive && window.innerWidth > CONFIG.BREAKPOINT ){      
       this.scrollProgress += e.deltaY/1000;
       if( this.scrollProgress > 1 ){
         this.scrollProgress = 1;

@@ -1,3 +1,5 @@
+import CONFIG from './CONFIG.js';
+
 let Text = function( _$ele, _duration ){
   this.TYPE = 'text';
   this.$ele = _$ele;
@@ -15,7 +17,7 @@ let Text = function( _$ele, _duration ){
   this.deactivateTimer;
 
   this.$ele.addEventListener('wheel', ( e ) => {
-    if( this.isActive ){
+    if( this.isActive && window.innerWidth > CONFIG.BREAKPOINT ){
       this.pauseAndAutoResume( 500 );
       this.progress += e.deltaY/1000;
       this.step();
