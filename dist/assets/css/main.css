@@ -170,6 +170,7 @@ html, body{
       }
 
     .control__mute{
+      display: none;
       left: 2.5rem;
     }
     .control__mute svg .cross-out{
@@ -202,6 +203,9 @@ html, body{
     .stage.active .progress--indicator{
       transition: opacity 1.5s ease-in;
       opacity: 1;
+    }
+    .progress--indicator.state__hidden{
+      display: none;
     }
   .screen__text{
     padding: 5.5rem 1.5rem;
@@ -260,9 +264,7 @@ html, body{
     z-index: 0;
   }
 
-  .screen__text__credits .screen--content{
-    padding-top: 10rem;
-    padding-top: 100vh;
+  .screen__text__credits .screen--content{    
     padding-bottom: 10rem;
   }
 
@@ -363,25 +365,41 @@ html, body{
       .control{
         display: block;
       }
+        .control__mute{
+          display: none;
+        }
       .control.state__hidden{
         opacity: 0;
         pointer-events: none;
       }
         
     .landing{
+      display: block;
       opacity: 0;     
       position: fixed;
       width: 100%;
       height: 100%;
       z-index: 8;
-      background: #000000;
-      color: #FFFFFF;
+      background: #1f1f1f;
       transition: opacity 1s ease-in-out;
       pointer-events: none;
     }
       body.state__landing .landing{      
         opacity: 1;
         pointer-events: all;
+      }
+      .landing svg{
+        transform: translateX(-50%) translateY(-50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* sized like film: */
+        width: 91%;
+        /* sized for site */
+        width: 83%;
+      }
+      .landing svg path{
+        fill: #000000;
       }
     .screen{
       height: 100%;
@@ -414,6 +432,16 @@ html, body{
           position: absolute;
           top: 50%;
           width: 177.77777778vh;
+        }
+        body.state__fullscreen .screen__video iframe{
+          min-height: none;
+          min-width: none;
+          width: 100%;
+          height: 100%;;
+          transform: none;
+          position: relative;
+          top: 0;
+          left: 0;
         }
         .video-overlay svg{
           display: none;
