@@ -11,7 +11,7 @@ let navSetActive = function(){
 let $progress = document.querySelector('.progress');
 let $stage_titles = $progress.querySelectorAll('.progress--stage');
 let currentStageIndex = -1;
-let textDurations = [14000, 15000, 15000];
+let textDurations = [14000, 16000, 17000];
 let stages = [ ... document.querySelectorAll('.stage__excerpt') ]
               .map( (s, i) => { 
                 return new Stage(
