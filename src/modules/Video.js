@@ -28,6 +28,7 @@ let Video = function( _$ele ){
   this.vimeo.getDuration().then( duration => this.duration = duration * 1000 );
   this.$content = this.$ele.querySelector('.screen--content');
   
+
   this.$ele.addEventListener( 'wheel', ( e ) => {
     if( this.isActive && window.innerWidth > CONFIG.BREAKPOINT ){      
       this.scrollProgress += e.deltaY/1000;
@@ -99,7 +100,9 @@ let Video = function( _$ele ){
     this.isPreactivating = false;
     this.isPlaying = true;
     this.$content.classList.add('playing');
-    this.vimeo.play();
+    this.vimeo.play().then( () => {
+      console.log('playback has begun')
+    })
     this.unmute();
   }
   
@@ -182,6 +185,12 @@ let Video = function( _$ele ){
     this.unmute();
     this.togglePlay();
   });
+
+  if( window.innerWidth <= CONFIG.BREAKPOINT ){
+    this.preactivate( () => {
+      this.vimeo.setCurrentTime( 1 );
+    });    
+  }
 }
 
 export default Video;
