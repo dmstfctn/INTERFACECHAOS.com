@@ -412,8 +412,17 @@ html, body{
       .landing svg path{
         fill: rgb(14,14,14);
       }
+
+    .stage{
+      transition: opacity 1.25s ease-in;
+      opacity: 0;
+    }
+      .stage.active{
+        opacity: 1;
+      }
     .progress--indicator{
       display: block;
+      z-index: 4;
     }
     .screen{
       height: 100%;
@@ -430,6 +439,7 @@ html, body{
       }
       .screen__text{
         padding: 5.5rem;
+        z-index: 3;
       }
       .screen__text .screen--content{
         transform: translateZ(0);
@@ -440,6 +450,8 @@ html, body{
       .screen__video{
         height: 100%;
         padding: 0;
+        opacity: 1;
+        z-index: 2;
       }
         .screen__video iframe{
           /* see: https://stackoverflow.com/a/33617910 */
