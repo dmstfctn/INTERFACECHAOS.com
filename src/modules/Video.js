@@ -87,8 +87,10 @@ let Video = function( _$ele ){
   }
 
   this._onProgress = () => {
-    if( typeof this.onProgress === 'function' ){
-      this.onProgress();
+    if( !this.isPreactivating ){
+      if( typeof this.onProgress === 'function' ){
+        this.onProgress();
+      }
     }
   }
   
