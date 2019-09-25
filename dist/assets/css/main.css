@@ -430,7 +430,6 @@ html, body{
       position: fixed;
       background: #000000;
       opacity: 0;
-      transition: opacity 1.25s ease-in;
       pointer-events: none;
     }
       .screen.active{
