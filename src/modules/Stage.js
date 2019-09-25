@@ -27,14 +27,14 @@ let Stage = function( _$ele, _opts ){
     this._onChangeCurrent();
   }
 
-  this.video.onScrollUp = () => {
-    this.video.deactivate();
-    this.video.fadeOut( 1500, () => {
-      this.current = this.text;
-      this.text.activate();
-      this._onChangeCurrent();
-    });    
-  }
+  // this.video.onScrollUp = () => {
+  //   this.video.deactivate();
+  //   this.video.fadeOut( 1500, () => {
+  //     this.current = this.text;
+  //     this.text.activate();
+  //     this._onChangeCurrent();
+  //   });    
+  // }
 
   this.text.onProgress = () => {
     let length = this.text.duration + this.video.duration;
