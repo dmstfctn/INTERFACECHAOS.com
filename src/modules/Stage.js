@@ -13,14 +13,14 @@ let Stage = function( _$ele, _opts ){
   this.$progress = this.$ele.querySelector('.progress--indicator');
   this.current = this.text;
 
-  this.text.onComplete = () => {
+  this.text.onComplete = () => {    
     this.text.deactivate();
     this.current = this.video;    
     this.video.activate();
     this._onChangeCurrent();
   }
 
-  this.video.onComplete = () => {
+  this.video.onComplete = () => {    
     this.deactivate();
     this.current = this.text;
     this._onComplete();

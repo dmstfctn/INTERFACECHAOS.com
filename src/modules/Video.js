@@ -14,6 +14,11 @@ let Video = function( _$ele ){
   this.scrollProgress = 0.5;
   this.isActive = false;
 
+  this.endAtOffsetFromEnd = 1;
+  if( this.$content.dataset.vimeo_id === '360147975'){
+    this.endAtOffsetFromEnd = 2;
+  }
+
   this.isPlaying = false;
   this.vimeo = new VimeoPlayer( 
     this.$content, 
@@ -48,10 +53,8 @@ let Video = function( _$ele ){
   this.isPreactivating = false;
   this.preactivate = ( _callback ) => {
     this.isPreactivating = true;
-    console.log('preactivate')
     this.vimeo.play().then( () => {      
       if(this.isPreactivating){
-        console.log( 'preactivated' );
         this.vimeo.pause();
         if( typeof _callback === 'function' ){
           _callback();
@@ -74,6 +77,7 @@ let Video = function( _$ele ){
     this.time = 0;
     this.vimeo.setCurrentTime(1);
     this.$ele.classList.remove('active');
+    clearInterval( this.fadeLoop );
   }
 
   this._onComplete = () => {
@@ -96,21 +100,20 @@ let Video = function( _$ele ){
   }
   
   this.play = () => {
-    console.log('video play')
     this.isPreactivating = false;
     this.isPlaying = true;
     this.$content.classList.add('playing');
     this.vimeo.play().then( () => {
-      console.log('playback has begun')
+
     })
     this.unmute();
   }
   
   this.pause = () => {
-    console.log('video pause')
     this.isPlaying = false;
     this.$content.classList.remove('playing');
     this.vimeo.pause();
+    clearInterval( this.fadeLoop );
   }
 
   this.togglePlay = () => {
@@ -150,7 +153,7 @@ let Video = function( _$ele ){
     }, 10 );
   };
 
-  this.fadeOut = ( _time, _callback ) => {  
+  this.fadeOut = ( _time, _callback ) => {
     let time = _time || 100;
     let callback = _callback || function(){};  
     clearInterval( this.fadeLoop );
@@ -175,7 +178,7 @@ let Video = function( _$ele ){
     this.duration = t.duration * 1000;
     
     this._onProgress();
-    if( t.seconds >= t.duration - 2 ){
+    if( t.seconds >= t.duration - this.endAtOffsetFromEnd ){
       this._onComplete();
     }
   });
