@@ -20,22 +20,26 @@ let Video = function( _$ele ){
   }
 
   this.isPlaying = false;
-  this.vimeo = new VimeoPlayer( 
-    this.$content, 
-    {
-      id: this.$content.dataset.vimeo_id,
-      width: window.innerWidth,
-      autoplay: false,
-      controls: false,
-      autopause: true
-    } 
-  );
+  if( this.$content.querySelector('iframe') ){
+    this.vimeo = new VimeoPlayer( this.$content.querySelector('iframe') );
+  } else {
+    this.vimeo = new VimeoPlayer( 
+      this.$content, 
+      {
+        id: this.$content.dataset.vimeo_id,
+        width: window.innerWidth,
+        autoplay: false,
+        controls: false,
+        autopause: true
+      } 
+    );
+  }
   this.vimeo.getDuration().then( duration => this.duration = duration * 1000 );
   this.$content = this.$ele.querySelector('.screen--content');
   
 
   this.$ele.addEventListener( 'wheel', ( e ) => {
-    if( this.isActive && window.innerWidth > CONFIG.BREAKPOINT ){      
+    if( this.isActive && window.innerWidth > CONFIG.BREAKPOINT ){
       this.scrollProgress += e.deltaY/1000;
       if( this.scrollProgress > 1 ){
         this.scrollProgress = 1;
@@ -189,7 +193,7 @@ let Video = function( _$ele ){
     this.togglePlay();
   });
 
-  if( window.innerWidth <= CONFIG.BREAKPOINT ){
+  if( window.innerWidth <= CONFIG.BREAKPOINT ){  
     this.preactivate( () => {
       this.vimeo.setCurrentTime( 1 );
     });    
