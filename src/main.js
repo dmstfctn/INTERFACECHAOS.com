@@ -59,9 +59,14 @@ document.addEventListener('keyup', ( e ) => {
 
 let $fullscreen_btn = document.querySelector('.control__fullscreen');
 let $fullscreen_label = $fullscreen_btn.querySelector('.control--label');
+let $fullscreen_wrap = document.querySelector('.site-wrap');
+if( !($fullscreen_wrap.requestFullscreen || $fullscreen_wrap.webkitRequestFullscreen) ){
+  $fullscreen_btn.style.display = 'none';
+}
 
 document.addEventListener('fullscreenchange', (event) => {
-  if (document.fullscreenElement) {
+  var fsEle = document.fullscreenElement || document.webkitFullscreenElement;
+  if (fsEle) {
     document.body.classList.add('state__fullscreen');
     $fullscreen_btn .classList.add('state__fullscreen-active');
     $fullscreen_label.innerText = 'exit fullscreen';
@@ -72,14 +77,27 @@ document.addEventListener('fullscreenchange', (event) => {
   }
 });
 $fullscreen_btn.addEventListener( 'click', () => {
-  if (!document.fullscreenElement) {
-    document.querySelector('.site-wrap')
-      .requestFullscreen({ navigationUI: "hide" })        
-      .catch( ( err ) => {
-        console.log('Could not enter fullscreen');
-      });       
+  var fsEle = document.fullscreenElement || document.webkitFullscreenElement;
+  if (!fsEle) {   
+    if( !!$fullscreen_wrap.requestFullscreen ){
+      $fullscreen_wrap
+        .requestFullscreen({ navigationUI: "hide" })        
+        .catch( ( err ) => {
+          console.log('Could not enter fullscreen');
+        });   
+    } else if( !!$fullscreen_wrap.webkitRequestFullscreen ){
+      $fullscreen_wrap
+        .webkitRequestFullscreen({ navigationUI: "hide" })        
+        .catch( ( err ) => {
+          console.log('Could not enter fullscreen');
+        });   
+    }    
   } else {
-    document.exitFullscreen();
+    if( !!document.exitFullscreen ){
+      document.exitFullscreen();
+    } else if( !!document.webkitExitFullscreen ){
+      document.webkitExitFullscreen();
+    }
   }
 });
 
