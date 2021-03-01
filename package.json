@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack --watch"
+    "develop": "webpack --watch",
+    "build": "webpack"
   },
   "author": "DC",
   "license": "WTFPL",
